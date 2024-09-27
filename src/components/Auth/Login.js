@@ -20,6 +20,7 @@ const Login = () => {
         setError('');
 
         try {
+            console.log("Backend URL:", backendUrl);
             const response = await axios.post(`${backendUrl}/auth/login`, { phoneNumber });
             setOtpMessage(response.data.message);
             setIsOtpSent(true); // Show OTP input after successful phone number validation
@@ -40,6 +41,7 @@ const Login = () => {
         }
 
         try {
+            console.log("Backend URL:", backendUrl);
             // Simulating OTP verification
             const response = await axios.post(`${backendUrl}/auth/verify-otp`, { phoneNumber, otp });
             if (response.data.valid) {
@@ -56,7 +58,7 @@ const Login = () => {
     return (
         <div className="login-container w-full">
             <div className="flex items-center justify-center mb-6">
-                <h2 className="title-font-xl">Login1</h2>
+                <h2 className="title-font-xl">Login2</h2>
             </div>
             {!isOtpSent ? (
                 <form onSubmit={handlePhoneSubmit}>
