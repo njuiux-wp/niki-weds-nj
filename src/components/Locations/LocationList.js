@@ -7,9 +7,11 @@ import LocationModal from './LocationModal';
 const LocationList = () => {
     const [locations, setLocations] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    // Use environment variable for backend URL
+    const backendUrl = process.env.REACT_APP_BACKEND_URL; 
 
     useEffect(() => {
-        axios.get('http://localhost:5001/locations')
+        axios.get(`${backendUrl}/locations`)
             .then(response => setLocations(response.data))
             .catch(error => console.error(error));
     }, []);

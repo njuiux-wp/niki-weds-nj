@@ -8,9 +8,11 @@ const VendorList = () => {
   const [vendorData, setVendorData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentVendor, setCurrentVendor] = useState(null);
+  // Use environment variable for backend URL
+  const backendUrl = process.env.REACT_APP_BACKEND_URL; 
 
   useEffect(() => {
-    axios.get('http://localhost:5001/vendors')
+    axios.get(`${backendUrl}/vendors`)
       .then(response => {
         setVendorData(response.data);
       })
@@ -38,7 +40,7 @@ const VendorList = () => {
       payments: [], // Initialize with empty array if needed
     };
 
-    axios.post(`http://localhost:5001/vendors`, { category: vendor.category, newVendor: vendorData })
+    axios.post(`${backendUrl}/vendors`, { category: vendor.category, newVendor: vendorData })
       .then(response => {
         const category = vendor.category;
         setVendorData(prev => ({
@@ -62,7 +64,7 @@ const VendorList = () => {
       // If editing, find the old category
     const oldCategory = currentVendor.category;
       // If editing, update the vendor
-      axios.put(`http://localhost:5001/vendors/${currentVendor.category}/${currentVendor.id}`, vendor)
+      axios.put(`${backendUrl}/vendors/${currentVendor.category}/${currentVendor.id}`, vendor)
         .then(response => {
           setVendorData(prev => ({
             ...prev,
@@ -82,7 +84,7 @@ const VendorList = () => {
 
 
   const handleDeleteVendor = (category, id) => {
-    axios.delete(`http://localhost:5001/vendors/${category}/${id}`)
+    axios.delete(`${backendUrl}/vendors/${category}/${id}`)
       .then(() => {
         setVendorData(prev => ({
           ...prev,

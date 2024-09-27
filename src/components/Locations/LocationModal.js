@@ -13,6 +13,8 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
         decorations: false,
         foods: false,
     });
+    // Use environment variable for backend URL
+    const backendUrl = process.env.REACT_APP_BACKEND_URL; 
 
     // Reset form data when the modal opens
     useEffect(() => {
@@ -32,7 +34,7 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const newLocation = { name, fromDate, perDayPrice, options };
-        axios.post('http://localhost:5001/locations', newLocation)
+        axios.post(`${backendUrl}/locations`, newLocation)
             .then(response => {
                 onLocationAdded(response.data); // This should work if the prop is passed correctly
                 onClose();

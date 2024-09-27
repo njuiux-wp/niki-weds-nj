@@ -10,9 +10,11 @@ const VendorDetail = () => {
   const [vendor, setVendor] = useState(null);
   const [payments, setPayments] = useState([]);
   const navigate = useNavigate();
+  // Use environment variable for backend URL
+  const backendUrl = process.env.REACT_APP_BACKEND_URL; 
 
   useEffect(() => {
-    axios.get(`http://localhost:5001/vendors/${category}/${id}`)
+    axios.get(`${backendUrl}/vendors/${category}/${id}`)
       .then(response => {
         setVendor(response.data);
         setPayments(response.data.payments);
@@ -23,7 +25,7 @@ const VendorDetail = () => {
   }, [category, id]);
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:5001/vendors/${category}/${id}`)
+    axios.delete(`${backendUrl}/vendors/${category}/${id}`)
       .then(() => navigate('/dashboard')) // Update navigation method
       .catch(error => console.error("Error deleting vendor:", error));
   };
@@ -36,7 +38,7 @@ const VendorDetail = () => {
       date: new Date().toISOString().split('T')[0],
     };
 
-    axios.post(`http://localhost:5001/vendors/${category}/${id}/payments`, payment)
+    axios.post(`${backendUrl}/vendors/${category}/${id}/payments`, payment)
       .then(response => {
         setPayments([...payments, response.data]);
         setVendor(prev => ({

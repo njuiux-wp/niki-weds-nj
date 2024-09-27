@@ -11,6 +11,8 @@ const Login = () => {
     const [isOtpSent, setIsOtpSent] = useState(false);
     const navigate = useNavigate();
     const { login } = useAuth();
+    // Use environment variable for backend URL
+    const backendUrl = process.env.REACT_APP_BACKEND_URL; 
 
     const handlePhoneSubmit = async (e) => {
         e.preventDefault();
@@ -18,7 +20,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await axios.post('https://niki-weds-nj.onrender.com/auth/login', { phoneNumber });
+            const response = await axios.post(`${backendUrl}/auth/login`, { phoneNumber });
             setOtpMessage(response.data.message);
             setIsOtpSent(true); // Show OTP input after successful phone number validation
         } catch (error) {
@@ -39,7 +41,7 @@ const Login = () => {
 
         try {
             // Simulating OTP verification
-            const response = await axios.post('http://localhost:5001/auth/verify-otp', { phoneNumber, otp });
+            const response = await axios.post(`${backendUrl}/auth/verify-otp`, { phoneNumber, otp });
             if (response.data.valid) {
                 login(response.data.username); // Store username in context after successful login
                 navigate('/dashboard');

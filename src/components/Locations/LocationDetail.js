@@ -8,21 +8,23 @@ const LocationDetail = () => {
   const { id } = useParams();
   const [location, setLocation] = useState(null);
   const navigate = useNavigate();
+  // Use environment variable for backend URL
+  const backendUrl = process.env.REACT_APP_BACKEND_URL; 
 
   useEffect(() => {
-    axios.get(`http://localhost:5001/locations/${id}`)
+    axios.get(`${backendUrl}/locations/${id}`)
       .then(response => setLocation(response.data))
       .catch(error => console.error(error));
   }, [id]);
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:5001/locations/${id}`)
+    axios.delete(`${backendUrl}/locations/${id}`)
       .then(() => navigate('/locations'))
       .catch(error => console.error(error));
   };
 
   const handleEdit = (updatedLocation) => {
-    axios.put(`http://localhost:5001/locations/${id}`, updatedLocation)
+    axios.put(`${backendUrl}/locations/${id}`, updatedLocation)
       .then(response => setLocation(response.data))
       .catch(error => console.error(error));
   };

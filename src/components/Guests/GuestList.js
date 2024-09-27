@@ -5,11 +5,13 @@ import { ChevronRightIcon } from '@heroicons/react/solid';
 const GuestList = () => {
   const [guests, setGuests] = useState({ NJ: [], Niki: [] });
   const [activeTab, setActiveTab] = useState('Niki');
+  // Use environment variable for backend URL
+  const backendUrl = process.env.REACT_APP_BACKEND_URL; 
 
   useEffect(() => {
     const fetchGuests = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/guests'); // Use the absolute URL
+        const response = await axios.get(`${backendUrl}/guests`); // Use the absolute URL
         setGuests(response.data);
       } catch (error) {
         console.error('Error fetching guests:', error);
