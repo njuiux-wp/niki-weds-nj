@@ -6,8 +6,11 @@ const PORT = 5001;
 // Use CORS
 // Allow requests from your frontend's URL
 app.use(cors({
-  origin: 'https://njuiux-wp.github.io/niki-weds-nj'
+  origin: 'https://njuiux-wp.github.io/niki-weds-nj',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(express.json());
 
 // Import and use routes
