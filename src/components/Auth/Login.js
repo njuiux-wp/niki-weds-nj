@@ -56,7 +56,7 @@ const Login = () => {
     return (
         <div className="login-container w-full">
             <div className="flex items-center justify-center mb-6">
-                <h2 className="title-font-xl">Login</h2>
+                <h2 className="title-font-xl">Login1</h2>
             </div>
             {!isOtpSent ? (
                 <form onSubmit={handlePhoneSubmit}>
