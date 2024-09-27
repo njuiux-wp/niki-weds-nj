@@ -18,7 +18,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await axios.post('http://localhost:5001/auth/login', { phoneNumber });
+            const response = await axios.post('https://niki-weds-nj.onrender.com/auth/login', { phoneNumber });
             setOtpMessage(response.data.message);
             setIsOtpSent(true); // Show OTP input after successful phone number validation
         } catch (error) {
