@@ -11,7 +11,7 @@ const VendorDetail = () => {
   const [payments, setPayments] = useState([]);
   const navigate = useNavigate();
   // Use environment variable for backend URL
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://niki-weds-nj.onrender.com/niki-weds-nj'; 
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://niki-weds-nj.onrender.com'; 
 
   useEffect(() => {
     axios.get(`${backendUrl}/vendors/${category}/${id}`)

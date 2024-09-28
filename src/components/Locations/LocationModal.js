@@ -14,7 +14,7 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
         foods: false,
     });
     // Use environment variable for backend URL
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://niki-weds-nj.onrender.com/niki-weds-nj'; 
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://niki-weds-nj.onrender.com'; 
 
     // Reset form data when the modal opens
     useEffect(() => {
