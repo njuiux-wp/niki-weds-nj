@@ -9,7 +9,7 @@ const VendorList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentVendor, setCurrentVendor] = useState(null);
   // Use environment variable for backend URL
-  const backendUrl = process.env.REACT_APP_BACKEND_URL; 
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://niki-weds-nj.onrender.com/niki-weds-nj'; 
 
   useEffect(() => {
     axios.get(`${backendUrl}/vendors`)

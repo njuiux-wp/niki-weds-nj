@@ -6,7 +6,7 @@ const GuestList = () => {
   const [guests, setGuests] = useState({ NJ: [], Niki: [] });
   const [activeTab, setActiveTab] = useState('Niki');
   // Use environment variable for backend URL
-  const backendUrl = process.env.REACT_APP_BACKEND_URL; 
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://niki-weds-nj.onrender.com/niki-weds-nj'; 
 
   useEffect(() => {
     const fetchGuests = async () => {
