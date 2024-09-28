@@ -8,7 +8,7 @@ const LocationList = () => {
     const [locations, setLocations] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     // Use environment variable for backend URL
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://niki-weds-nj.onrender.com'; 
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com'; 
 
     useEffect(() => {
         axios.get(`${backendUrl}/locations`)
