@@ -8,14 +8,13 @@ const Login = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [otp, setOtp] = useState('');
     const [otpMessage, setOtpMessage] = useState('');
+    const [storedOtp, setStoredOtp] = useState(''); // State for storing OTP
     const [error, setError] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [loading, setLoading] = useState(false); // State for loader
     const navigate = useNavigate();
     const { login } = useAuth();
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com';
-
-    let storedOtp = ''; // Store the OTP after generation
 
     const handlePhoneSubmit = async (e) => {
         e.preventDefault();
@@ -28,7 +27,7 @@ const Login = () => {
             const response = await axios.post(`${backendUrl}/auth/login`, { phoneNumber });
             setOtpMessage(response.data.message);
             console.log('data:', setOtpMessage);
-            storedOtp = response.data.otp; // Store the OTP after generation
+            setStoredOtp(response.data.otp); // Store the OTP in state
             setIsOtpSent(true); // Show OTP input after successful phone number validation
         } catch (error) {
             if (error.response && error.response.data) {
