@@ -60,8 +60,8 @@ const Login = () => {
     };
 
     const copyToClipboard = () => {
-        // Extract the first 4 digits from the message (if present)
-        const otpMatch = otpMessage.match(/\d{4}/);
+        // Extract the last 4 digits from the message (since the OTP is at the end)
+        const otpMatch = otpMessage.match(/(\d{4})$/);  // Adjusted to match the last 4 digits of the message
 
         if (otpMatch && otpMatch[0]) {
             const otp = otpMatch[0];
