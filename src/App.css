@@ -247,6 +247,7 @@ body {
   border: 1px solid var(--app-theme-color6);
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  max-width: 380px;
 }
 
 .ReactModal__Overlay {

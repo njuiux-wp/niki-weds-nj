@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ClipboardCopyIcon, ClipboardIcon } from '@heroicons/react/solid'; // Import required icons
 import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
@@ -9,15 +10,16 @@ const Login = () => {
     const [otpMessage, setOtpMessage] = useState('');
     const [error, setError] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
+    const [loading, setLoading] = useState(false); // State for loader
     const navigate = useNavigate();
     const { login } = useAuth();
-    // Use environment variable for backend URL
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com'; 
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com';
 
     const handlePhoneSubmit = async (e) => {
         e.preventDefault();
         setOtpMessage('');
         setError('');
+        setLoading(true); // Start loader
 
         try {
             console.log("Backend URL:", backendUrl);
@@ -30,6 +32,8 @@ const Login = () => {
             } else {
                 setError('Something went wrong. Please try again.');
             }
+        } finally {
+            setLoading(false); // Stop loader
         }
     };
 
@@ -42,7 +46,6 @@ const Login = () => {
 
         try {
             console.log("Backend URL:", backendUrl);
-            // Simulating OTP verification
             const response = await axios.post(`${backendUrl}/auth/verify-otp`, { phoneNumber, otp });
             if (response.data.valid) {
                 login(response.data.username); // Store username in context after successful login
@@ -52,6 +55,21 @@ const Login = () => {
             }
         } catch (error) {
             setError('Something went wrong during OTP verification.');
+        }
+    };
+
+    const copyToClipboard = () => {
+        // Extract only the 4-digit OTP from the message
+        const otp = otpMessage.match(/\d{4}/)[0];
+        navigator.clipboard.writeText(otp);
+    };
+
+    const pasteFromClipboard = async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            setOtp(text);
+        } catch (error) {
+            setError('Failed to paste OTP.');
         }
     };
 
@@ -77,14 +95,25 @@ const Login = () => {
                             className="form-input"
                         />
                         {/* Display otpMessage and error below the input */}
-                        {otpMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>}
+                        {otpMessage && (
+                            <div className="flex items-center">
+                                <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>
+                                <ClipboardCopyIcon
+                                    className="h-5 w-5 text-green-600 ml-2 cursor-pointer"
+                                    onClick={copyToClipboard}
+                                    title="Copy OTP"
+                                />
+                            </div>
+                        )}
                         {error && <p className="text-red-700 desc-font-xs mt-1 !font-[400] error-message">{error}</p>}
                     </div>
-                    <button className="theme-btn mt-6" type="submit">Get OTP</button>
+                    <button className="theme-btn mt-6" type="submit" disabled={loading}>
+                        {loading ? 'Sending OTP...' : 'Get OTP'}
+                    </button>
                 </form>
             ) : (
                 <form onSubmit={handleOtpSubmit}>
-                    <div className="input-group form-group">
+                    <div className="input-group form-group relative">
                         <label className="desc-font-xs uppercase mb-1" htmlFor="otp">Enter OTP</label>
                         <input
                             type="text"
@@ -93,6 +122,11 @@ const Login = () => {
                             maxLength={4}
                             onChange={(e) => setOtp(e.target.value)}
                             className="form-input"
+                        />
+                        <ClipboardIcon
+                            className="h-5 w-5 absolute right-2 top-2 text-gray-400 cursor-pointer"
+                            onClick={pasteFromClipboard}
+                            title="Paste OTP"
                         />
                         {/* Display otpMessage and error below the input */}
                         {otpMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>}
