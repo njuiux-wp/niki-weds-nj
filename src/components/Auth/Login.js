@@ -109,7 +109,7 @@ const Login = () => {
                         {otpMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>}
                         {error && <p className="text-red-700 desc-font-xs mt-1 !font-[400] error-message">{error}</p>}
                     </div>
-                    <button className="theme-btn mt-6" type="submit" disabled={loading}>
+                    <button className={`theme-btn mt-6 ${loading ? 'opacity-70' : ''}`} type="submit" disabled={loading}>
                         {loading ? 'Sending OTP...' : 'Get OTP'}
                     </button>
                 </form>
@@ -135,13 +135,14 @@ const Login = () => {
                         {/* Display otpMessage and error below the input */}
                         {otpMessage && (
                             <div className="flex items-center">
-                            <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>
-                            <DocumentDuplicateIcon
-                                className="h-5 w-5 App-link ml-2 cursor-pointer"
-                                onClick={copyToClipboard}
-                                title="Copy OTP"
-                            />
-                        </div>
+                                <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>
+                                <button onClick={copyToClipboard} className="theme-btn !bg-transparent ml-2 App-link !w-[16px] !h-[16px] !p-0 !flex">
+                                    <DocumentDuplicateIcon
+                                        className="h-4 w-4 cursor-pointer"
+                                        title="Copy OTP"
+                                    />
+                                </button>
+                            </div>
                         )}
                         {successMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400]">{successMessage}</p>}
                         {error && <p className="text-red-700 desc-font-xs mt-1 !font-[400] error-message">{error}</p>}
