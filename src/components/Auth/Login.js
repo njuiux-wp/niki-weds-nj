@@ -95,16 +95,7 @@ const Login = () => {
                             className="form-input"
                         />
                         {/* Display otpMessage and error below the input */}
-                        {otpMessage && (
-                            <div className="flex items-center">
-                                <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>
-                                <ClipboardCopyIcon
-                                    className="h-5 w-5 text-green-600 ml-2 cursor-pointer"
-                                    onClick={copyToClipboard}
-                                    title="Copy OTP"
-                                />
-                            </div>
-                        )}
+                        {otpMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>}
                         {error && <p className="text-red-700 desc-font-xs mt-1 !font-[400] error-message">{error}</p>}
                     </div>
                     <button className="theme-btn mt-6" type="submit" disabled={loading}>
@@ -113,23 +104,34 @@ const Login = () => {
                 </form>
             ) : (
                 <form onSubmit={handleOtpSubmit}>
-                    <div className="input-group form-group relative">
+                    <div className="input-group form-group">
                         <label className="desc-font-xs uppercase mb-1" htmlFor="otp">Enter OTP</label>
-                        <input
-                            type="text"
-                            id="otp"
-                            value={otp}
-                            maxLength={4}
-                            onChange={(e) => setOtp(e.target.value)}
-                            className="form-input"
-                        />
-                        <ClipboardIcon
-                            className="h-5 w-5 absolute right-2 top-2 text-gray-400 cursor-pointer"
-                            onClick={pasteFromClipboard}
-                            title="Paste OTP"
-                        />
+                        <div className="relative">
+                            <input
+                                type="text"
+                                id="otp"
+                                value={otp}
+                                maxLength={4}
+                                onChange={(e) => setOtp(e.target.value)}
+                                className="form-input"
+                            />
+                            <ClipboardIcon
+                                className="h-5 w-5 absolute right-2 top-2 App-link cursor-pointer"
+                                onClick={pasteFromClipboard}
+                                title="Paste OTP"
+                            />
+                        </div>
                         {/* Display otpMessage and error below the input */}
-                        {otpMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>}
+                        {otpMessage && (
+                            <div className="flex items-center">
+                            <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>
+                            <ClipboardCopyIcon
+                                className="h-5 w-5 App-link ml-2 cursor-pointer"
+                                onClick={copyToClipboard}
+                                title="Copy OTP"
+                            />
+                        </div>
+                        )}
                         {error && <p className="text-red-700 desc-font-xs mt-1 !font-[400] error-message">{error}</p>}
                     </div>
                     <button className="theme-btn mt-6" type="submit">Submit OTP</button>
