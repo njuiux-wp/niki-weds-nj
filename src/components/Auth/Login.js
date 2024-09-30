@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ClipboardCopyIcon, ClipboardIcon } from '@heroicons/react/solid'; // Import required icons
+import { DocumentDuplicateIcon, ClipboardIcon } from '@heroicons/react/solid'; // Import required icons
 import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
@@ -9,6 +9,7 @@ const Login = () => {
     const [otp, setOtp] = useState('');
     const [otpMessage, setOtpMessage] = useState('');
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [loading, setLoading] = useState(false); // State for loader
     const navigate = useNavigate();
@@ -59,9 +60,19 @@ const Login = () => {
     };
 
     const copyToClipboard = () => {
-        // Extract only the 4-digit OTP from the message
         const otp = otpMessage.match(/\d{4}/)[0];
-        navigator.clipboard.writeText(otp);
+        const textarea = document.createElement('textarea');
+        textarea.value = otp;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            setSuccessMessage('OTP copied successfully!'); // Show success message
+            setTimeout(() => setSuccessMessage(''), 3000); // Hide message after 3 seconds
+        } catch (err) {
+            setError('Failed to copy OTP.');
+        }
+        document.body.removeChild(textarea);
     };
 
     const pasteFromClipboard = async () => {
@@ -116,7 +127,7 @@ const Login = () => {
                                 className="form-input"
                             />
                             <ClipboardIcon
-                                className="h-5 w-5 absolute right-2 top-2 App-link cursor-pointer"
+                                className="h-5 w-5 absolute right-2 top-2.5 App-link cursor-pointer"
                                 onClick={pasteFromClipboard}
                                 title="Paste OTP"
                             />
@@ -125,13 +136,14 @@ const Login = () => {
                         {otpMessage && (
                             <div className="flex items-center">
                             <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>
-                            <ClipboardCopyIcon
+                            <DocumentDuplicateIcon
                                 className="h-5 w-5 App-link ml-2 cursor-pointer"
                                 onClick={copyToClipboard}
                                 title="Copy OTP"
                             />
                         </div>
                         )}
+                        {successMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400]">{successMessage}</p>}
                         {error && <p className="text-red-700 desc-font-xs mt-1 !font-[400] error-message">{error}</p>}
                     </div>
                     <button className="theme-btn mt-6" type="submit">Submit OTP</button>
