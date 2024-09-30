@@ -27,6 +27,7 @@ const Login = () => {
             console.log("Backend URL:", backendUrl);
             const response = await axios.post(`${backendUrl}/auth/login`, { phoneNumber });
             setOtpMessage(response.data.message);
+            console.log('data:', setOtpMessage);
             storedOtp = response.data.otp; // Store the OTP after generation
             setIsOtpSent(true); // Show OTP input after successful phone number validation
         } catch (error) {
@@ -115,7 +116,7 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={handlePasteOtp}
-                                className="theme-btn !bg-transparent !p-0 !w-[20px] !h-[20px] absolute right-2 top-2.5 App-link !flex"
+                                className="!bg-transparent !p-0 !w-[20px] !h-[20px] absolute right-2 top-2.5 App-link !flex"
                             >
                                 <ClipboardIcon className="w-5 h-5" />
                             </button>
