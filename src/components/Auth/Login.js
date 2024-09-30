@@ -60,19 +60,28 @@ const Login = () => {
     };
 
     const copyToClipboard = () => {
-        const otp = otpMessage.match(/\d{4}/)[0];
-        const textarea = document.createElement('textarea');
-        textarea.value = otp;
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-            document.execCommand('copy');
-            setSuccessMessage('OTP copied successfully!'); // Show success message
-            setTimeout(() => setSuccessMessage(''), 3000); // Hide message after 3 seconds
-        } catch (err) {
-            setError('Failed to copy OTP.');
+        // Extract the first 4 digits from the message (if present)
+        const otpMatch = otpMessage.match(/\d{4}/);
+
+        if (otpMatch && otpMatch[0]) {
+            const otp = otpMatch[0];
+            const textarea = document.createElement('textarea');
+            textarea.value = otp;
+            document.body.appendChild(textarea);
+            textarea.select();
+
+            try {
+                document.execCommand('copy');
+                setSuccessMessage('OTP copied successfully!'); // Show success message
+                setTimeout(() => setSuccessMessage(''), 3000); // Hide message after 3 seconds
+            } catch (err) {
+                setError('Failed to copy OTP.');
+            }
+
+            document.body.removeChild(textarea);
+        } else {
+            setError('No OTP found to copy.');
         }
-        document.body.removeChild(textarea);
     };
 
     const pasteFromClipboard = async () => {
@@ -109,7 +118,7 @@ const Login = () => {
                         {otpMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>}
                         {error && <p className="text-red-700 desc-font-xs mt-1 !font-[400] error-message">{error}</p>}
                     </div>
-                    <button className={`theme-btn mt-6 ${loading ? 'opacity-70' : ''}`} type="submit" disabled={loading}>
+                    <button className={`theme-btn mt-6 ${loading ? 'opacity-60' : ''}`} type="submit" disabled={loading}>
                         {loading ? 'Sending OTP...' : 'Get OTP'}
                     </button>
                 </form>
@@ -129,17 +138,15 @@ const Login = () => {
                             <ClipboardIcon
                                 className="h-5 w-5 absolute right-2 top-2.5 App-link cursor-pointer"
                                 onClick={pasteFromClipboard}
-                                title="Paste OTP"
                             />
                         </div>
                         {/* Display otpMessage and error below the input */}
                         {otpMessage && (
-                            <div className="flex items-center">
+                            <div className="flex items-center mt-1">
                                 <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>
-                                <button onClick={copyToClipboard} className="theme-btn !bg-transparent ml-2 App-link !w-[16px] !h-[16px] !p-0 !flex">
+                                <button type="button" onClick={copyToClipboard} className="theme-btn !bg-transparent ml-2 App-link !w-[16px] !h-[16px] !p-0 !flex">
                                     <DocumentDuplicateIcon
                                         className="h-4 w-4 cursor-pointer"
-                                        title="Copy OTP"
                                     />
                                 </button>
                             </div>
