@@ -9,12 +9,13 @@ const Login = () => {
     const [otp, setOtp] = useState('');
     const [otpMessage, setOtpMessage] = useState('');
     const [error, setError] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [loading, setLoading] = useState(false); // State for loader
     const navigate = useNavigate();
     const { login } = useAuth();
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com';
+
+    let storedOtp = ''; // Store the OTP after generation
 
     const handlePhoneSubmit = async (e) => {
         e.preventDefault();
@@ -26,6 +27,7 @@ const Login = () => {
             console.log("Backend URL:", backendUrl);
             const response = await axios.post(`${backendUrl}/auth/login`, { phoneNumber });
             setOtpMessage(response.data.message);
+            storedOtp = response.data.otp; // Store the OTP after generation
             setIsOtpSent(true); // Show OTP input after successful phone number validation
         } catch (error) {
             if (error.response && error.response.data) {
@@ -59,37 +61,12 @@ const Login = () => {
         }
     };
 
-    const copyToClipboard = () => {
-        // Extract the last 4 digits from the message (since the OTP is at the end)
-        const otpMatch = otpMessage.match(/(\d{4})$/);  // Adjusted to match the last 4 digits of the message
-
-        if (otpMatch && otpMatch[0]) {
-            const otp = otpMatch[0];
-            const textarea = document.createElement('textarea');
-            textarea.value = otp;
-            document.body.appendChild(textarea);
-            textarea.select();
-
-            try {
-                document.execCommand('copy');
-                setSuccessMessage('OTP copied successfully!'); // Show success message
-                setTimeout(() => setSuccessMessage(''), 3000); // Hide message after 3 seconds
-            } catch (err) {
-                setError('Failed to copy OTP.');
-            }
-
-            document.body.removeChild(textarea);
+    // Handle the "Paste OTP" functionality
+    const handlePasteOtp = () => {
+        if (storedOtp) {
+            setOtp(storedOtp); // Automatically paste the stored OTP into the input field
         } else {
-            setError('No OTP found to copy.');
-        }
-    };
-
-    const pasteFromClipboard = async () => {
-        try {
-            const text = await navigator.clipboard.readText();
-            setOtp(text);
-        } catch (error) {
-            setError('Failed to paste OTP.');
+            setError('No OTP available to paste.');
         }
     };
 
@@ -135,23 +112,16 @@ const Login = () => {
                                 onChange={(e) => setOtp(e.target.value)}
                                 className="form-input"
                             />
-                            <ClipboardIcon
-                                className="h-5 w-5 absolute right-2 top-2.5 App-link cursor-pointer"
-                                onClick={pasteFromClipboard}
-                            />
+                            <button
+                                type="button"
+                                onClick={handlePasteOtp}
+                                className="theme-btn !bg-transparent !p-0 !w-[20px] !h-[20px] absolute right-2 top-2.5 App-link !flex"
+                            >
+                                <ClipboardIcon className="w-5 h-5" />
+                            </button>
                         </div>
                         {/* Display otpMessage and error below the input */}
-                        {otpMessage && (
-                            <div className="flex items-center mt-1">
-                                <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>
-                                <button type="button" onClick={copyToClipboard} className="theme-btn !bg-transparent ml-2 App-link !w-[16px] !h-[16px] !p-0 !flex">
-                                    <DocumentDuplicateIcon
-                                        className="h-4 w-4 cursor-pointer"
-                                    />
-                                </button>
-                            </div>
-                        )}
-                        {successMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400]">{successMessage}</p>}
+                        {otpMessage && <p className="text-green-600 desc-font-xs mt-1 !font-[400] success-message">{otpMessage}</p>}
                         {error && <p className="text-red-700 desc-font-xs mt-1 !font-[400] error-message">{error}</p>}
                     </div>
                     <button className="theme-btn mt-6" type="submit">Submit OTP</button>
