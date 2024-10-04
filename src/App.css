@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inconsolata:wght@200..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playwrite+DE+Grund:wght@100..400&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 :root {
-  --app-theme-bg: #FFF;
-  --app-theme-color1: #FBF8F2;
+  --app-theme-bg: #F4F4F2;
+  --app-theme-color1: #FFF;
   --app-theme-color2: #BFA054;
   --app-theme-color3: #9A2143;
+  --app-theme-colorlight3: #f8ceda;
   --app-theme-color4: #f6f6f6;
   --app-theme-color5: #9EA1AB;
   --app-theme-color6: #d3d6e0;
@@ -52,8 +53,8 @@ body {
   background-color: var(--app-theme-bg-white);
 }
 
-.app-theme-bg-light-mehendi {
-  background-color: var(--app-theme-color1);
+.app-theme-bg-lightburgundy {
+  background-color: var(--app-theme-colorlight3);
 }
 
 .app-theme-bg-burgundy {
@@ -69,11 +70,11 @@ body {
 }
 
 .fs-14 {
-  font-size: 14px;
+  font-size: 14px !important;
 }
 
 .fs-16 {
-  font-size: 16px;
+  font-size: 16px !important;
 }
 
 .fs-18 {
@@ -182,6 +183,7 @@ body {
 .app-card {
   @apply rounded-2xl p-4 flex justify-between items-center;
   background-color: var(--app-theme-color1);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .guests-navbar {
@@ -231,6 +233,16 @@ body {
   line-height: normal;
 }
 
+.form-input:-webkit-autofill {
+  @apply bg-white;
+  color: var(--color-black);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-input:-webkit-autofill::first-line {
+  color: var(--color-black);
+}
+
 .theme-btn {
   @apply w-full relative block shadow-none rounded-xl h-[42px] py-[7px] px-[12px] uppercase;
   background-color: var(--app-theme-color3);
@@ -248,6 +260,8 @@ body {
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   max-width: 380px;
+  max-height: 550px;
+  overflow-y: auto;
 }
 
 .ReactModal__Overlay {

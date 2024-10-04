@@ -58,7 +58,7 @@ const VendorDetail = () => {
     <div className="w-full">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
-          <Link className="btn-icon fs-14 underline" to="/">
+          <Link className="btn-icon fs-14 underline" to="/vendors">
             <ArrowLeftIcon className="h-4 w-4" />
           </Link>
           <h2 className="title-font-xl ms-2">Vendor's Details</h2>
@@ -96,7 +96,7 @@ const VendorDetail = () => {
           <span className="desc-font-xs uppercase font-bold">Paid Amount</span>
         </p>
         <p className="flex items-center">
-          <span className="app-theme-bg-light-mehendi w-3 h-3 rounded-full shadow mr-2"></span>
+          <span className="app-theme-bg-lightburgundy w-3 h-3 rounded-full shadow mr-2"></span>
           <span className="desc-font-xs uppercase font-bold">Total Amount</span>
         </p>
       </div>

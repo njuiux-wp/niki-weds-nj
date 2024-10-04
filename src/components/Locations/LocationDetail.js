@@ -9,7 +9,7 @@ const LocationDetail = () => {
   const [location, setLocation] = useState(null);
   const navigate = useNavigate();
   // Use environment variable for backend URL
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com'; 
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com';
 
   useEffect(() => {
     axios.get(`${backendUrl}/locations/${id}`)
@@ -44,7 +44,7 @@ const LocationDetail = () => {
           <TrashIcon className="h-4 w-4" />
         </button>
       </div>
-      <div className="app-card flex flex-col !justify-start gap-4 mb-4">
+      <div className="app-card flex flex-col !justify-start gap-4 mb-5">
         <p className="title-font-m flex flex-col w-full">
           <span className="desc-font-xs uppercase">Name:</span>
           <span className="font-bold">{location.name}</span>
@@ -53,6 +53,8 @@ const LocationDetail = () => {
           <span className="desc-font-xs uppercase">From Date:</span>
           <span className="font-bold">{location.fromDate}</span>
         </p>
+      </div>
+      <div className="app-card flex flex-col !justify-start gap-4 mb-5">
         <p className="title-font-m flex flex-col w-full">
           <span className="desc-font-xs uppercase">Price (Per Day):</span>
           <span className="font-bold">Rs.{location.perDayPrice}</span>
@@ -66,21 +68,28 @@ const LocationDetail = () => {
           <span className="font-bold">Rs.{location.perDayPrice * 2 * 50}</span>
         </p>
         <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Chairs:</span>
-          <span className="font-bold">{location.options.chairs ? 'Yes' : 'No'}</span>
+          <span className="desc-font-xs uppercase">Deposit Paid:</span>
+          <span className="font-bold">Rs.50000</span>
         </p>
-        <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Beds:</span>
-          <span className="font-bold">{location.options.beds ? 'Yes' : 'No'}</span>
-        </p>
-        <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Decorations:</span>
-          <span className="font-bold">{location.options.decorations ? 'Yes' : 'No'}</span>
-        </p>
-        <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Foods:</span>
-          <span className="font-bold">{location.options.foods ? 'Yes' : 'No'}</span>
-        </p>
+      </div>
+      <h2 className="title-font-xl fs-16">Facilities</h2>
+      <div className="flex flex-wrap items-center w-full mt-2 mb-4">
+        {location.options.chairs ? (
+          <div className="flex items-center justify-center rounded-lg fs-14 bg-white px-2 py-1 title-font-m font-bold mb-3 mr-3">Chairs</div>
+        ) : ("")
+        }
+        {location.options.beds ? (
+          <div className="flex items-center justify-center rounded-lg fs-14 bg-white px-2 py-1 title-font-m font-bold mb-3 mr-3">Beds</div>
+        ) : ("")
+        }
+        {location.options.decorations ? (
+          <div className="flex items-center justify-center rounded-lg fs-14 bg-white px-2 py-1 title-font-m font-bold mb-3 mr-3">Decorations</div>
+        ) : ("")
+        }
+        {location.options.foods ? (
+          <div className="flex items-center justify-center rounded-lg fs-14 bg-white px-2 py-1 title-font-m font-bold mb-3 mr-3">Foods</div>
+        ) : ("")
+        }
       </div>
     </div>
   );

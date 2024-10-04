@@ -1,17 +1,5 @@
 [
   {
-    "id": 4,
-    "name": "dwarka 3",
-    "fromDate": "2024-10-31",
-    "perDayPrice": 1000,
-    "options": {
-      "chairs": false,
-      "beds": true,
-      "decorations": true,
-      "foods": false
-    }
-  },
-  {
     "id": 5,
     "name": "dwarka 4",
     "fromDate": "2024-10-31",

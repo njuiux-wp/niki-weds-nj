@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ChevronRightIcon } from '@heroicons/react/solid';
+import { Link } from 'react-router-dom';
 
 const GuestList = () => {
   const [guests, setGuests] = useState({ NJ: [], Niki: [] });
@@ -27,9 +28,9 @@ const GuestList = () => {
         <span className="desc-font-s !text-black">{guest.name}</span>
         <div className="flex items-center justify-end">
           <span className="desc-font-s !font-bold !text-black max-w-[60px] mr-2">{guest.familyMembers}</span>
-          <button className="btn-icon !text-black" type="button">
+          <Link className="btn-icon !text-black" type="button" to="/guests-details">
             <ChevronRightIcon className="h-6 w-6" />
-          </button>
+          </Link>
         </div>
       </div>
     ));

@@ -13,6 +13,8 @@ import LocationList from './components/Locations/LocationList';
 import LocationDetail from './components/Locations/LocationDetail';
 import Login from './components/Auth/Login';
 import PrivateRoute from './components/PrivateRoute';
+import GuestDashboard from './components/Guests/GuestDashboard';
+import GuestDetail from './components/Guests/GuestDetail';
 
 const AppRoutes = () => {
     return (
@@ -23,7 +25,9 @@ const AppRoutes = () => {
             <Route path="/vendor/:category/:id" element={<PrivateRoute><VendorDetail /></PrivateRoute>} />
             <Route path="/locations" element={<PrivateRoute><LocationList /></PrivateRoute>} />
             <Route path="/locations/:id" element={<PrivateRoute><LocationDetail /></PrivateRoute>} />
+            <Route path="/guest-dashboard" element={<PrivateRoute><GuestDashboard /></PrivateRoute>} />
             <Route path="/guests" element={<PrivateRoute><GuestList /></PrivateRoute>} />
+            <Route path="/guests-details" element={<PrivateRoute><GuestDetail /></PrivateRoute>} />
             <Route path="/budget" element={<PrivateRoute><BudgetTracker /></PrivateRoute>} />
             <Route path="/todo" element={<PrivateRoute><ToDo /></PrivateRoute>} />
             <Route path="/attire" element={<PrivateRoute><Attire /></PrivateRoute>} />

@@ -18,7 +18,7 @@ const BottomNavbar = ({ activeTab, setActiveTab }) => {
                 </button>
                 <button
                     className={`bottom-tab ${activeTab === 'guestlist' ? 'active' : ''}`}
-                    onClick={() => { setActiveTab('guestlist'); navigate('/guests'); }}
+                    onClick={() => { setActiveTab('guestlist'); navigate('/guest-dashboard'); }}
                 >
                     <UserGroupIcon className="h-4 w-4" />
                     <span>Guests</span>
