@@ -1,58 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import ProgressBar from '../../widgets/ProgressBar';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/solid';
-import { Link } from 'react-router-dom';
+import VendorModal from './VendorModal';
 
-const VendorDetail = () => {
-  const { category, id } = useParams();
+const VendorDetail = ({ vendors, setVendors }) => {
+  const { id } = useParams();
   const [vendor, setVendor] = useState(null);
-  const [payments, setPayments] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
-  // Use environment variable for backend URL
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com'; 
+
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com';
 
   useEffect(() => {
-    axios.get(`${backendUrl}/vendors/${category}/${id}`)
-      .then(response => {
+    const fetchVendor = async () => {
+      try {
+        const response = await axios.get(`${backendUrl}/vendors/${id}`);
         setVendor(response.data);
-        setPayments(response.data.payments);
-      })
-      .catch(error => {
-        console.error("Error fetching vendor:", error);
-      });
-  }, [category, id]);
-
-  const handleDelete = () => {
-    axios.delete(`${backendUrl}/vendors/${category}/${id}`)
-      .then(() => navigate('/dashboard')) // Update navigation method
-      .catch(error => console.error("Error deleting vendor:", error));
-  };
-
-  const handleAddPayment = () => {
-    const payment = {
-      paidBy: 'Client',
-      paymentVia: 'Bank Transfer',
-      amount: 1000,
-      date: new Date().toISOString().split('T')[0],
+      } catch (error) {
+        console.error('Error fetching vendor:', error);
+      }
     };
+    fetchVendor();
+  }, [id]);
 
-    axios.post(`${backendUrl}/vendors/${category}/${id}/payments`, payment)
-      .then(response => {
-        setPayments([...payments, response.data]);
-        setVendor(prev => ({
-          ...prev,
-          depositPaid: prev.depositPaid + payment.amount,
-          payments: [...prev.payments, response.data],
-        }));
-      })
-      .catch(error => console.error("Error adding payment:", error));
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${backendUrl}/vendors/${id}`);
+      setVendors((prevVendors) => prevVendors.filter(v => v.id !== id));
+      navigate('/vendors');
+    } catch (error) {
+      console.error('Error deleting vendor:', error);
+    }
   };
 
-  if (!vendor) return <div>Loading...</div>; // Consider a loading spinner here
-
-  const totalPayments = vendor.payments.reduce((acc, payment) => acc + payment.amount, 0);
+  if (!vendor) return <div>Loading...</div>;
 
   return (
     <div className="w-full">
@@ -61,67 +43,74 @@ const VendorDetail = () => {
           <Link className="btn-icon fs-14 underline" to="/vendors">
             <ArrowLeftIcon className="h-4 w-4" />
           </Link>
-          <h2 className="title-font-xl ms-2">Vendor's Details</h2>
+          <h2 className="title-font-xl ms-2">Vendor Details</h2>
         </div>
-        <button className="theme-btn !w-[30px] !h-[30px] !p-0 !flex items-center justify-center" onClick={handleDelete}>
+        <button onClick={handleDelete} className="theme-btn !w-[30px] !h-[30px] !p-0 !flex items-center justify-center">
           <TrashIcon className="h-4 w-4" />
         </button>
       </div>
-      <div className="app-card flex flex-col !justify-start gap-4 mb-4">
+      <div className="app-card flex flex-col !justify-start gap-4 mb-5">
         <p className="title-font-m flex flex-col w-full">
           <span className="desc-font-xs uppercase">Name:</span>
           <span className="font-bold">{vendor.name}</span>
         </p>
         <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Phone:</span>
-          <span className="font-bold">{vendor.contact}</span>
+          <span className="desc-font-xs uppercase">Contact:</span>
+          <span className="font-bold">{vendor.contactNumber}</span>
         </p>
         <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Total Amount:</span>
-          <span className="font-bold">Rs.{vendor.totalAmount}</span>
+          <span className="desc-font-xs uppercase">Category:</span>
+          <span className="font-bold">{vendor.category}</span>
+        </p>
+      </div>
+      <div className="app-card flex flex-col !justify-start gap-4 mb-5">
+        <p className="title-font-m flex flex-col w-full">
+          <span className="desc-font-xs uppercase">Total Payment:</span>
+          <span className="font-bold">Rs.{vendor.totalPayment}</span>
         </p>
         <p className="title-font-m flex flex-col w-full">
           <span className="desc-font-xs uppercase">Deposit Paid:</span>
-          <span className="font-bold">Rs.{vendor.depositPaid}</span>
+          <span className="font-bold">Rs.{vendor.depositPaid} on {vendor.depositDate}</span>
         </p>
         <p className="title-font-m flex flex-col w-full">
           <span className="desc-font-xs uppercase">Remaining Amount:</span>
-          <span className="font-bold">Rs.{vendor.totalAmount - vendor.depositPaid}</span>
+          <span className="font-bold">Rs.{vendor.totalPayment} - {vendor.depositPaid}</span>
         </p>
       </div>
-      <ProgressBar total={vendor.totalAmount} paid={vendor.depositPaid} />
-      <div className="flex !justify-between mt-2 w-full">
-        <p className="flex items-center">
-          <span className="app-theme-bg-burgundy w-3 h-3 rounded-full shadow mr-2"></span>
-          <span className="desc-font-xs uppercase font-bold">Paid Amount</span>
-        </p>
-        <p className="flex items-center">
-          <span className="app-theme-bg-lightburgundy w-3 h-3 rounded-full shadow mr-2"></span>
-          <span className="desc-font-xs uppercase font-bold">Total Amount</span>
-        </p>
-      </div>
-      {/* <h3>Payments</h3> */}
-      {/* <table>
+      <button onClick={() => setModalIsOpen(true)} className="theme-btn">Edit</button>
+      <VendorModal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        editingVendor={vendor}
+        setVendors={setVendors}
+        vendors={vendors}
+        onUpdate={(updatedVendor) => setVendor(updatedVendor)} // Update local vendor state
+      />
+      {/* Transaction Table */}
+      <table className="w-full mt-4">
         <thead>
           <tr>
-            <th>Paid By</th>
-            <th>Payment Via</th>
+            <th>Transaction Date</th>
             <th>Amount</th>
-            <th>Date</th>
+            <th>Mode</th>
           </tr>
         </thead>
         <tbody>
-          {payments.map((payment, index) => (
-            <tr key={payment.id || index}>
-              <td>{payment.paidBy}</td>
-              <td>{payment.paymentVia}</td>
-              <td>${payment.amount}</td>
-              <td>{new Date(payment.date).toLocaleDateString()}</td>
+          {vendor.transactions && vendor.transactions.length > 0 ? (
+            vendor.transactions.map(transaction => (
+              <tr key={transaction.id}>
+                <td>{transaction.date}</td>
+                <td>{transaction.amount}</td>
+                <td>{transaction.mode}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4" className="text-center">No transactions available</td>
             </tr>
-          ))}
+          )}
         </tbody>
-      </table> */}
-      {/* <button onClick={handleAddPayment}>Add Payment</button> */}
+      </table>
     </div>
   );
 };

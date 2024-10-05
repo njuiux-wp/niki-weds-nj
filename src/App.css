@@ -124,7 +124,7 @@ body {
 
 .title-font-m {
   font-size: var(--fs-16);
-  color: var(--app-theme-color2);
+  color: var(--color-black);
   font-weight: 600;
   line-height: normal;
 }
@@ -183,7 +183,7 @@ body {
 .app-card {
   @apply rounded-2xl p-4 flex justify-between items-center;
   background-color: var(--app-theme-color1);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .guests-navbar {
