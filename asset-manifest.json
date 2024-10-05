@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/niki-weds-nj/static/css/main.f83fbe2c.css",
-    "main.js": "/niki-weds-nj/static/js/main.d128080e.js",
+    "main.js": "/niki-weds-nj/static/js/main.23981171.js",
     "static/js/453.51b06834.chunk.js": "/niki-weds-nj/static/js/453.51b06834.chunk.js",
     "service-worker.js": "/niki-weds-nj/service-worker.js",
     "index.html": "/niki-weds-nj/index.html",
     "main.f83fbe2c.css.map": "/niki-weds-nj/static/css/main.f83fbe2c.css.map",
-    "main.d128080e.js.map": "/niki-weds-nj/static/js/main.d128080e.js.map",
+    "main.23981171.js.map": "/niki-weds-nj/static/js/main.23981171.js.map",
     "453.51b06834.chunk.js.map": "/niki-weds-nj/static/js/453.51b06834.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f83fbe2c.css",
-    "static/js/main.d128080e.js"
+    "static/js/main.23981171.js"
   ]
 }
