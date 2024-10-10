@@ -7,6 +7,7 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
     const [name, setName] = useState('');
     const [fromDate, setFromDate] = useState('');
     const [perDayPrice, setPerDayPrice] = useState(0);
+    const [depositPaid, setDepositPaid] = useState(0);
     const [options, setOptions] = useState({
         chairs: false,
         beds: false,
@@ -22,6 +23,7 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
             setName('');
             setFromDate('');
             setPerDayPrice('');
+            setDepositPaid('');
             setOptions({
                 chairs: false,
                 beds: false,
@@ -33,7 +35,7 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newLocation = { name, fromDate, perDayPrice, options };
+        const newLocation = { name, fromDate, perDayPrice, depositPaid, options };
         axios.post(`${backendUrl}/locations`, newLocation)
             .then(response => {
                 onLocationAdded(response.data); // This should work if the prop is passed correctly
@@ -62,6 +64,10 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
                 <div className="form-group">
                     <label className="desc-font-xs uppercase mb-1">Price (Per Day)</label>
                     <input type="number" className="form-input" value={perDayPrice} onChange={(e) => setPerDayPrice(Number(e.target.value))} required />
+                </div>
+                <div className="form-group">
+                    <label className="desc-font-xs uppercase mb-1">Deposit</label>
+                    <input type="number" className="form-input" value={depositPaid} onChange={(e) => setDepositPaid(Number(e.target.value))} required />
                 </div>
                 <div className="form-group">
                     <label className="desc-font-xs uppercase mb-1">Features</label>

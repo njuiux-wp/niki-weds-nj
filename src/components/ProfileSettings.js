@@ -6,12 +6,12 @@ const ProfileSettings = () => {
   const menuItems = [
     { label: 'Dashboard', path: '/dashboard' },
     { label: 'Location List', path: '/locations' },
-    { label: 'Guest List', path: '/guests' },
     { label: 'Vendors', path: '/vendors' },
     { label: 'Budget Tracker', path: '/budget' },
+    { label: 'Guest List', path: '/guests' },
     { label: 'To Do', path: '/todo' },
     { label: 'Attire', path: '/attire' },
-    { label: 'Grocery List', path: '/grocery' } // Assuming you want a unique route for Grocery List
+    { label: 'Grocery List', path: '/grocery' } 
   ];
 
   return (

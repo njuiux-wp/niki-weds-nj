@@ -39,9 +39,9 @@ const VendorModal = ({ isOpen, onRequestClose, editingVendor, setVendors, vendor
     try {
       let response;
       if (editingVendor) {
-        response = await axios.put(`${backendUrl}/vendors/${editingVendor.id}`, newVendor);
+        response = await axios.put(`${backendUrl}/vendors/${editingVendor._id}`, newVendor);
         setVendors((prevVendors) =>
-          prevVendors.map((vendor) => (vendor.id === editingVendor.id ? response.data : vendor))
+          prevVendors.map((vendor) => (vendor._id === editingVendor._id ? response.data : vendor))
         );
         onUpdate(response.data); // Call the update callback
       } else {

@@ -35,7 +35,7 @@ const ToDoDetail = () => {
 
   const handleDelete = async () => {
     await axios.delete(`${backendUrl}/todo/${id}`);
-    setTodos(todos.filter(todo => todo.id !== id)); // Update the list after deletion
+    setTodos(todos.filter(todo => todo._id !== id)); // Update the list after deletion
     navigate('/todo');
   };
 

@@ -69,7 +69,7 @@ const LocationDetail = () => {
         </p>
         <p className="title-font-m flex flex-col w-full">
           <span className="desc-font-xs uppercase">Deposit Paid:</span>
-          <span className="font-bold">Rs.50000</span>
+          <span className="font-bold">Rs.{location.depositPaid}</span>
         </p>
       </div>
       <h2 className="title-font-xl fs-16">Facilities</h2>

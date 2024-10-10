@@ -22,7 +22,7 @@ const ToDoList = () => {
 
     const handleDelete = async (id) => {
         await axios.delete(`${backendUrl}/todo/${id}`);
-        setTodos(todos.filter(todo => todo.id !== id));
+        setTodos(todos.filter(todo => todo._id !== id));
     };
 
     // Edit function
@@ -45,7 +45,7 @@ const ToDoList = () => {
                 <button onClick={() => setModalIsOpen(true)} className="btn-icon fs-14 underline" type="button">Add</button>
             </div>
             {todos.map(todo => (
-                <div key={todo.id} className="app-card flex justify-between mb-4">
+                <div key={todo._id} className="app-card flex justify-between mb-4">
                     <div className="flex flex-col">
                         <p className="title-font-m">{todo.title}</p>
                         <p className="desc-font-s my-1">Due Date: {todo.dueDate}</p>
@@ -54,10 +54,10 @@ const ToDoList = () => {
                         <button className="btn-icon" onClick={() => handleEdit(todo)} type="button">
                             <PencilIcon className="h-4 w-4" />
                         </button>
-                        <button className="btn-icon !mx-4" onClick={() => handleDelete(todo.id)} type="button">
+                        <button className="btn-icon !mx-4" onClick={() => handleDelete(todo._id)} type="button">
                             <TrashIcon className="h-4 w-4" />
                         </button>
-                        <Link to={`/todo/${todo.id}`} className="btn-icon">
+                        <Link to={`/todo/${todo._id}`} className="btn-icon">
                             <ChevronRightIcon className="h-6 w-6" />
                         </Link>
                     </div>

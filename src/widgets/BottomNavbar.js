@@ -1,10 +1,31 @@
 // src/widgets/BottomNavbar.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { HeartIcon, UserGroupIcon, BriefcaseIcon, ViewGridIcon } from '@heroicons/react/solid';
 
 const BottomNavbar = ({ activeTab, setActiveTab }) => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Effect to set active tab based on the current route
+    useEffect(() => {
+        switch (location.pathname) {
+            case '/dashboard':
+                setActiveTab('dashboard');
+                break;
+            case '/guest-dashboard':
+                setActiveTab('guestlist');
+                break;
+            case '/vendors':
+                setActiveTab('vendors');
+                break;
+            case '/settings':
+                setActiveTab('settings');
+                break;
+            default:
+                setActiveTab('dashboard'); // Default or fallback
+        }
+    }, [location.pathname, setActiveTab]);
 
     return (
         <nav className="bottom-navbar">

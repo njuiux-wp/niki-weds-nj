@@ -74,7 +74,7 @@ const VendorDetail = ({ vendors, setVendors }) => {
         </p>
         <p className="title-font-m flex flex-col w-full">
           <span className="desc-font-xs uppercase">Remaining Amount:</span>
-          <span className="font-bold">Rs.{vendor.totalPayment} - {vendor.depositPaid}</span>
+          <span className="font-bold">Rs.{vendor.totalPayment - vendor.depositPaid}</span>
         </p>
       </div>
       <button onClick={() => setModalIsOpen(true)} className="theme-btn">Edit</button>

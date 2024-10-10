@@ -31,14 +31,15 @@ const LocationList = () => {
                 <button className="btn-icon fs-14 underline" type="button" onClick={openAddModal}>Add</button>
             </div>
             {locations.map((location, index) => (
-                <div key={`${location.id}-${index}`} className="app-card flex justify-between mb-4">
+                <div key={`${location._id}-${index}`} className="app-card flex justify-between mb-4">
                     <div className="flex flex-col">
                         <p className="title-font-m">{location.name}</p>
                         <p className="desc-font-s my-1">From Date: {location.fromDate}</p>
                         <p className="desc-font-xs uppercase">Total Price: Rs.{location.perDayPrice * 2}</p>
+                        <p className="desc-font-xs uppercase">Deposit Paid: Rs.{location.depositPaid}</p>
                     </div>
                     <div className="flex">
-                        <Link className="btn-icon" to={`/locations/${location.id}`}>
+                        <Link className="btn-icon" to={`/locations/${location._id}`}>
                             <ChevronRightIcon className="h-6 w-6" />
                         </Link>
                     </div>

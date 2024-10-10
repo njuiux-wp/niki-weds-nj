@@ -33,8 +33,8 @@ const ToDoModal = ({ isOpen, onRequestClose, editingTodo, setTodos, todos, onUpd
         try {
             let response;
             if (editingTodo) {
-                response = await axios.put(`${backendUrl}/todo/${editingTodo.id}`, newToDo);
-                setTodos(todos.map(todo => (todo.id === editingTodo.id ? response.data : todo))); // Update specific ToDo
+                response = await axios.put(`${backendUrl}/todo/${editingTodo._id}`, newToDo);
+                setTodos(todos.map(todo => (todo._id === editingTodo._id ? response.data : todo))); // Update specific ToDo
             } else {
                 response = await axios.post(`${backendUrl}/todo`, newToDo);
                 setTodos([...todos, response.data]); // Add new ToDo to the list

@@ -22,7 +22,7 @@ const VendorList = () => {
 
   const handleDelete = async (id) => {
     await axios.delete(`${backendUrl}/vendors/${id}`);
-    setVendors(vendors.filter(vendor => vendor.id !== id));
+    setVendors(vendors.filter(vendor => vendor._id !== id));
   };
 
   const handleEdit = (vendor) => {
@@ -33,7 +33,7 @@ const VendorList = () => {
   // Handle the update from the modal
   const handleUpdate = (updatedVendor) => {
     setVendors((prevVendors) =>
-      prevVendors.map((vendor) => (vendor.id === updatedVendor.id ? updatedVendor : vendor))
+      prevVendors.map((vendor) => (vendor._id === updatedVendor._id ? updatedVendor : vendor))
     );
   };
 
@@ -44,7 +44,7 @@ const VendorList = () => {
         <button onClick={() => setModalIsOpen(true)} className="btn-icon fs-14 underline">Add</button>
       </div>
       {vendors.map(vendor => (
-        <div key={vendor.id} className="app-card flex justify-between mb-4">
+        <div key={vendor._id} className="app-card flex justify-between mb-4">
           <div className="flex flex-col">
             <p className="title-font-m">{vendor.name}</p>
             <p className="desc-font-s my-1">Contact: {vendor.contactNumber}</p>
@@ -54,10 +54,10 @@ const VendorList = () => {
             <button className="btn-icon" onClick={() => handleEdit(vendor)} type="button">
               <PencilIcon className="h-4 w-4" />
             </button>
-            <button className="btn-icon !mx-4" onClick={() => handleDelete(vendor.id)} type="button">
+            <button className="btn-icon !mx-4" onClick={() => handleDelete(vendor._id)} type="button">
               <TrashIcon className="h-4 w-4" />
             </button>
-            <Link to={`/vendors/${vendor.id}`} className="btn-icon">
+            <Link to={`/vendors/${vendor._id}`} className="btn-icon">
               <ChevronRightIcon className="h-6 w-6" />
             </Link>
           </div>
