@@ -5,12 +5,12 @@ import DashboardBanner from './DashboardBanner';
 import { Link, useLocation } from 'react-router-dom';
 
 const Dashboard = () => {
-  const [selectedLocation, setSelectedLocation] = useState(localStorage.getItem('selectedLocation') || selectedLocationFromQuery);
-
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const selectedLocationFromQuery = query.get('location');
+  const selectedLocationFromQuery = query.get('location'); // Define it here
 
+  // Use local storage for the selected location, with a fallback to the query parameter or a default value
+  const [selectedLocation, setSelectedLocation] = useState(localStorage.getItem('selectedLocation') || selectedLocationFromQuery || 'Dwarka');
 
   useEffect(() => {
     if (selectedLocationFromQuery) {
