@@ -175,7 +175,7 @@ body {
 }
 
 .bottom-tab.active {
-  color: var(--app-theme-color2);
+  color: var(--app-theme-color3);
   background-color: transparent;
   font-weight: 600;
 }
@@ -199,7 +199,7 @@ body {
 }
 
 .guests-navbar .bottom-tab.active {
-  border-bottom: 2px solid var(--app-theme-color2);
+  border-bottom: 2px solid var(--app-theme-color3);
 }
 
 .main-banner-box {

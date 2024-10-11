@@ -36,19 +36,19 @@ const DashboardBanner = () => {
             </div>
             <div className="main-countdown-box">
                 <div className="flex flex-col">
-                    <span className="title-font-m fs-14 mb-1">{timeLeft.days}</span>
+                    <span className="title-font-m App-link fs-14 mb-1">{timeLeft.days}</span>
                     <span className="desc-font-s fs-10">days</span>
                 </div>
                 <div className="flex flex-col">
-                    <span className="title-font-m fs-14 mb-1">{timeLeft.hours}</span>
+                    <span className="title-font-m App-link fs-14 mb-1">{timeLeft.hours}</span>
                     <span className="desc-font-s fs-10">hours</span>
                 </div>
                 <div className="flex flex-col">
-                    <span className="title-font-m fs-14 mb-1">{timeLeft.minutes}</span>
+                    <span className="title-font-m App-link fs-14 mb-1">{timeLeft.minutes}</span>
                     <span className="desc-font-s fs-10">minutes</span>
                 </div>
                 <div className="flex flex-col">
-                    <span className="title-font-m fs-14 mb-1">{timeLeft.seconds}</span>
+                    <span className="title-font-m App-link fs-14 mb-1">{timeLeft.seconds}</span>
                     <span className="desc-font-s fs-10">seconds</span>
                 </div>
             </div>
