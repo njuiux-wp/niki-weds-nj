@@ -1,4 +1,3 @@
-// src/widgets/BottomNavbar.js
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { HeartIcon, UserGroupIcon, BriefcaseIcon, ViewGridIcon } from '@heroicons/react/solid';
@@ -9,21 +8,17 @@ const BottomNavbar = ({ activeTab, setActiveTab }) => {
 
     // Effect to set active tab based on the current route
     useEffect(() => {
-        switch (location.pathname) {
-            case '/dashboard':
-                setActiveTab('dashboard');
-                break;
-            case '/guest-dashboard':
-                setActiveTab('guestlist');
-                break;
-            case '/vendors':
-                setActiveTab('vendors');
-                break;
-            case '/settings':
-                setActiveTab('settings');
-                break;
-            default:
-                setActiveTab('dashboard'); // Default or fallback
+        const path = location.pathname;
+
+        // Set activeTab based on the route
+        if (path.startsWith('/guest')) {
+            setActiveTab('guestlist');
+        } else if (path.startsWith('/vendors')) {
+            setActiveTab('vendors');
+        } else if (path.startsWith('/settings') || path.startsWith('/locations') || path.startsWith('/todo') || path.startsWith('/budget')) {
+            setActiveTab('settings');
+        } else {
+            setActiveTab('dashboard'); // Default to dashboard
         }
     }, [location.pathname, setActiveTab]);
 

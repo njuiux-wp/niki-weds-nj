@@ -2,20 +2,37 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/solid';
+import LocationModal from './LocationModal';
 
 
 const LocationDetail = () => {
   const { id } = useParams();
   const [location, setLocation] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const navigate = useNavigate();
   // Use environment variable for backend URL
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com';
 
   useEffect(() => {
-    axios.get(`${backendUrl}/locations/${id}`)
-      .then(response => setLocation(response.data))
-      .catch(error => console.error(error));
-  }, [id]);
+    const fetchLocationDetail = async () => {
+      try {
+        const response = await axios.get(`${backendUrl}/locations/${id}`);
+        if (response.status === 200) {
+          setLocation(response.data);
+        } else {
+          console.error('Location not found');
+          navigate('/locations'); // Redirect if location not found
+        }
+      } catch (error) {
+        console.error('Error fetching location details:', error.response?.data || error.message);
+        navigate('/locations'); // Redirect to locations list on error
+      }
+    };
+
+    if (id) {
+      fetchLocationDetail(); // Fetch location if id is present
+    }
+  }, [id, backendUrl, navigate]);
 
   const handleDelete = () => {
     axios.delete(`${backendUrl}/locations/${id}`)
@@ -23,10 +40,8 @@ const LocationDetail = () => {
       .catch(error => console.error(error));
   };
 
-  const handleEdit = (updatedLocation) => {
-    axios.put(`${backendUrl}/locations/${id}`, updatedLocation)
-      .then(response => setLocation(response.data))
-      .catch(error => console.error(error));
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
   };
 
   if (!location) return <div>Loading...</div>;
@@ -91,6 +106,13 @@ const LocationDetail = () => {
         ) : ("")
         }
       </div>
+      <button className="theme-btn" onClick={openEditModal}>Edit Location</button>
+      <LocationModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onLocationAdded={(updatedLocation) => setLocation(updatedLocation)} // Update location on edit
+        initialData={location} // Pass the current location data to edit
+      />
     </div>
   );
 };

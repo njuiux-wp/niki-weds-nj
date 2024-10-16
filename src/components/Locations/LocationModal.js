@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import { XIcon } from '@heroicons/react/solid';
 
-const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
+const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
     const [name, setName] = useState('');
     const [fromDate, setFromDate] = useState('');
     const [perDayPrice, setPerDayPrice] = useState(0);
@@ -14,40 +14,66 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
         decorations: false,
         foods: false,
     });
-    // Use environment variable for backend URL
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com'; 
 
-    // Reset form data when the modal opens
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com';
+
     useEffect(() => {
         if (isOpen) {
-            setName('');
-            setFromDate('');
-            setPerDayPrice('');
-            setDepositPaid('');
-            setOptions({
-                chairs: false,
-                beds: false,
-                decorations: false,
-                foods: false,
-            });
+            if (initialData) {
+                // Pre-fill form for editing
+                setName(initialData.name);
+                setFromDate(initialData.fromDate);
+                setPerDayPrice(initialData.perDayPrice);
+                setDepositPaid(initialData.depositPaid);
+                setOptions(initialData.options || {
+                    chairs: false,
+                    beds: false,
+                    decorations: false,
+                    foods: false,
+                });
+            } else {
+                // Clear form for adding new location
+                setName('');
+                setFromDate('');
+                setPerDayPrice('');
+                setDepositPaid('');
+                setOptions({
+                    chairs: false,
+                    beds: false,
+                    decorations: false,
+                    foods: false,
+                });
+            }
         }
-    }, [isOpen]);
+    }, [isOpen, initialData]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const newLocation = { name, fromDate, perDayPrice, depositPaid, options };
-        axios.post(`${backendUrl}/locations`, newLocation)
-            .then(response => {
-                onLocationAdded(response.data); // This should work if the prop is passed correctly
-                onClose();
-            })
-            .catch(error => console.error(error));
+
+        if (initialData) {
+            // Update existing location
+            axios.put(`${backendUrl}/locations/${initialData._id}`, newLocation)
+                .then(response => {
+                    onLocationAdded(response.data); // Update state with the edited location
+                    onClose();
+                })
+                .catch(error => console.error(error));
+        } else {
+            // Add new location
+            axios.post(`${backendUrl}/locations`, newLocation)
+                .then(response => {
+                    onLocationAdded(response.data);
+                    onClose();
+                })
+                .catch(error => console.error(error));
+        }
     };
 
     return (
         <Modal className="vendorModal" isOpen={isOpen} onRequestClose={onClose}>
             <div className="flex items-center justify-between mb-4">
-                <h2 className="title-font-xl">Add Location</h2>
+                <h2 className="title-font-xl">{initialData ? 'Edit Location' : 'Add Location'}</h2>
                 <button className="btn-icon" type="button" onClick={onClose}>
                     <XIcon className="h-4 w-4" />
                 </button>
@@ -90,7 +116,9 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded }) => {
                         </label>
                     </div>
                 </div>
-                <button className="theme-btn mt-6" type="submit">Add Location</button>
+                <button className="theme-btn mt-6" type="submit">
+                    {initialData ? 'Update Location' : 'Add Location'}
+                </button>
             </form>
         </Modal>
     );

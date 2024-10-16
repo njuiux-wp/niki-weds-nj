@@ -21,17 +21,34 @@ const BudgetTracker = () => {
         const response = await axios.get(`${backendUrl}/vendors`);
         const vendors = response.data;
 
-        // Calculate total paid and remaining amounts
-        const totalPaidAmount = vendors.reduce((sum, vendor) => sum + vendor.depositPaid, 0);
-        const totalRemainingAmount = vendors.reduce((sum, vendor) => sum + (vendor.totalPayment - vendor.depositPaid), 0);
+        // Group vendors by category and sum their paid and remaining amounts
+        const vendorMap = vendors.reduce((acc, vendor) => {
+          const category = vendor.category;
 
-        // Map vendor payment data
-        const vendorPaymentData = vendors.map(vendor => ({
-          category: vendor.category,
-          paid: vendor.depositPaid,
-          remaining: vendor.totalPayment - vendor.depositPaid,
-          total: vendor.totalPayment, // Pass total for progress bar calculation
-        }));
+          // If the category already exists, add the amounts to it
+          if (acc[category]) {
+            acc[category].paid += vendor.depositPaid;
+            acc[category].remaining += vendor.totalPayment - vendor.depositPaid;
+            acc[category].total += vendor.totalPayment;
+          } else {
+            // Otherwise, create a new entry for the category
+            acc[category] = {
+              category,
+              paid: vendor.depositPaid,
+              remaining: vendor.totalPayment - vendor.depositPaid,
+              total: vendor.totalPayment,
+            };
+          }
+
+          return acc;
+        }, {});
+
+        // Convert the object back into an array
+        const vendorPaymentData = Object.values(vendorMap);
+
+        // Calculate total paid and remaining amounts across all categories
+        const totalPaidAmount = vendorPaymentData.reduce((sum, vendor) => sum + vendor.paid, 0);
+        const totalRemainingAmount = vendorPaymentData.reduce((sum, vendor) => sum + vendor.remaining, 0);
 
         setVendorPayments(vendorPaymentData);
         setTotalPaid(totalPaidAmount);
@@ -65,7 +82,7 @@ const BudgetTracker = () => {
         color: (context) => {
           // Assign colors based on the dataIndex
           const index = context.dataIndex;
-          return index === 0 ? '#fff' : '#000'; 
+          return index === 0 ? '#fff' : '#000';
         },
         formatter: (value, context) => {
           const label = context.chart.data.labels[context.dataIndex];

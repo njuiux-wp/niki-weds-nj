@@ -48,7 +48,7 @@ const VendorList = () => {
           <div className="flex flex-col">
             <p className="title-font-m">{vendor.name}</p>
             <p className="desc-font-s my-1">Contact: {vendor.contactNumber}</p>
-            <p className="desc-font-xs uppercase">Category: {vendor.category}</p>
+            <div className="flex items-center justify-center rounded-lg fs-14 bg-green-700 px-2 py-1 title-font-m !text-white font-bold">{vendor.category}</div>
           </div>
           <div className="flex">
             <button className="btn-icon" onClick={() => handleEdit(vendor)} type="button">

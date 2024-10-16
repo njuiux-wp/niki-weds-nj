@@ -8,7 +8,7 @@ const Header = () => {
         <div className="main-headerbar">
             <h4 className="title-font-xl">Welcome {user}</h4>
             <button onClick={logout} className="theme-btn !bg-transparent App-link !w-[30px] !h-[30px] !p-0 !flex items-center justify-center">
-                <span class="material-symbols-outlined">
+                <span className="material-symbols-outlined">
                     mode_off_on
                 </span>
             </button>

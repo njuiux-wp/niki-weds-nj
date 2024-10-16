@@ -29,8 +29,8 @@ const AppRoutes = () => {
             <Route path="/locations" element={<PrivateRoute><LocationList /></PrivateRoute>} />
             <Route path="/locations/:id" element={<PrivateRoute><LocationDetail /></PrivateRoute>} />
             <Route path="/guest-dashboard" element={<PrivateRoute><GuestDashboard /></PrivateRoute>} />
-            <Route path="/guests" element={<PrivateRoute><GuestList /></PrivateRoute>} />
-            <Route path="/guests-details" element={<PrivateRoute><GuestDetail /></PrivateRoute>} />
+            <Route path="/guests/:activeTabParam" element={<PrivateRoute><GuestList /></PrivateRoute>} />
+            <Route path="/guests-details/:id" element={<PrivateRoute><GuestDetail /></PrivateRoute>} />
             <Route path="/budget" element={<PrivateRoute><BudgetTracker /></PrivateRoute>} />
             <Route path="/todo" element={<PrivateRoute><ToDoList /></PrivateRoute>} />
             <Route path="/todo/:id" element={<PrivateRoute><ToDoDetail /></PrivateRoute>} />

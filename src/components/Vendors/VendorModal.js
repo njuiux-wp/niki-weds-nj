@@ -101,26 +101,28 @@ const VendorModal = ({ isOpen, onRequestClose, editingVendor, setVendors, vendor
             required
           />
         </div>
-        <div className="form-group">
-          <label className="desc-font-xs uppercase mb-1">Deposit Paid Amount</label>
-          <input
-            type="text"
-            className="form-input"
-            maxLength={7}
-            value={depositPaid}
-            onChange={(e) => setDepositPaid(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label className="desc-font-xs uppercase mb-1">Deposit Date</label>
-          <input
-            type="date"
-            className="form-input"
-            value={depositDate}
-            onChange={(e) => setDepositDate(e.target.value)}
-            required
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div className="form-group">
+            <label className="desc-font-xs uppercase mb-1">Deposit Paid Amount</label>
+            <input
+              type="text"
+              className="form-input"
+              maxLength={7}
+              value={depositPaid}
+              onChange={(e) => setDepositPaid(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="desc-font-xs uppercase mb-1">Deposit Date</label>
+            <input
+              type="date"
+              className="form-input"
+              value={depositDate}
+              onChange={(e) => setDepositDate(e.target.value)}
+              required
+            />
+          </div>
         </div>
         <div className="form-group">
           <label className="desc-font-xs uppercase mb-1">Category</label>
