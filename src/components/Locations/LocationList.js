@@ -84,8 +84,7 @@ const LocationList = () => {
                     <div key={`${location._id}-${index}`} className={`app-card flex justify-between mb-4 !pb-12 relative ${selectedLocation === location.name ? 'bg-blue-100' : ''}`}>
                         <div className="flex flex-col">
                             <p className="title-font-m">{location.name}</p>
-                            <p className="desc-font-s my-1">From Date: {location.fromDate}</p>
-                            <p className="desc-font-xs uppercase">Total Price: Rs.{location.perDayRoomPrice * 2}</p>
+                            <p className="desc-font-s mt-1">Total Price: Rs.{location.totalAmount}</p>
                         </div>
                         <div className="flex">
                             <button className="btn-icon" onClick={() => openEditModal(location)} type="button">

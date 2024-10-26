@@ -66,8 +66,8 @@ const LocationDetail = () => {
           <span className="font-bold">{location.name}</span>
         </p>
         <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">From Date:</span>
-          <span className="font-bold">{location.fromDate}</span>
+          <span className="desc-font-xs uppercase">Total:</span>
+          <span className="font-bold">{location.totalAmount}</span>
         </p>
       </div>
       <div className="app-card flex flex-col !justify-start mb-5">

@@ -22,7 +22,7 @@ const Dashboard = () => {
   return (
     <div className="w-full">
       <DashboardBanner></DashboardBanner>
-      <div className="app-card my-8">
+      <div className="app-card my-5">
         <div>
           <span className="title-font-m">Location</span>
           <p className="desc-font-s">{selectedLocation}</p>
@@ -31,7 +31,7 @@ const Dashboard = () => {
           <PencilIcon className="h-4 w-4" />
         </Link>
       </div>
-      <div className="grid grid-cols-2 gap-4 my-3">
+      <div className="grid grid-cols-2 gap-4 mt-0 mb-6">
         <Link to={`/budget`} className="app-card flex-col">
           <div className="title-font-m fs-14">Budget</div>
           <ChevronRightIcon className="h-6 w-6 App-link" />

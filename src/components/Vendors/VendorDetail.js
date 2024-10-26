@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/solid';
 import VendorModal from './VendorModal';
+import Loader from '../../widgets/Loader';
 
 const VendorDetail = ({ vendors, setVendors }) => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const VendorDetail = ({ vendors, setVendors }) => {
     }
   };
 
-  if (!vendor) return <div>Loading...</div>;
+  if (!vendor) return <Loader />;
 
   return (
     <div className="w-full">

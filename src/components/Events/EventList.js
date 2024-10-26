@@ -61,6 +61,18 @@ const EventList = () => {
         setSelectedEvent(null);
     };
 
+    const iconMap = {
+        "Chunni Vidhi": "join",
+        "Engagement": "nutrition",
+        "Mandva Vidhi": "festival",
+        "Lunch": "fork_spoon",
+        "Haldi": "pen_size_3",
+        "Dinner": "dinner_dining",
+        "Garba": "stream",
+        "Marriage": "volunteer_activism",
+    };
+
+
     return (
         <>
             <div className="flex items-center justify-between mb-4">
@@ -72,11 +84,18 @@ const EventList = () => {
             <div className="grid grid-cols-1 gap-4">
                 {events.map((event) => (
                     <div key={event._id} className="app-card">
-                        <div>
-                            <span className="title-font-m">{event.name}</span>
-                            <p className="desc-font-s">
-                                {event.eventTime}, {new Date(event.eventDate).toLocaleDateString()}
-                            </p>
+                        <div className="flex items-center justify-start">
+                            <div className="!w-[42px] !h-[42px] rounded-full app-theme-bg flex items-center justify-center me-4">
+                                <span className="material-symbols-outlined fs-20">
+                                    {iconMap[event.name] || "event"} {/* Fallback to "event" icon if no match */}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="title-font-m">{event.name}</span>
+                                <p className="desc-font-s">
+                                    {new Date(event.eventDate).toLocaleDateString()} - {event.eventTime}
+                                </p>
+                            </div>
                         </div>
                         <button
                             className="btn-icon"

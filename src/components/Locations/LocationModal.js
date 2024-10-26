@@ -5,11 +5,12 @@ import { XIcon } from '@heroicons/react/solid';
 
 const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
     const [name, setName] = useState('');
-    const [fromDate, setFromDate] = useState('');
+    const [totalAmount, setTotalAmount] = useState('');
     const [totalRooms, settotalRooms] = useState('');
     const [totalHalls, settotalHalls] = useState('');
     const [perDayRoomPrice, setperDayRoomPrice] = useState(0);
     const [perDayHallPrice, setperDayHallPrice] = useState(0);
+    const [isTotalEdited, setIsTotalEdited] = useState(false);
     const [options, setOptions] = useState({
         chairs: false,
         beds: false,
@@ -19,12 +20,26 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://nwn-backend.onrender.com';
 
+    // Calculate total whenever room/hall or their prices change, if total hasn't been manually edited
+    useEffect(() => {
+        if (!isTotalEdited) {
+            const calculatedTotal = (totalRooms * perDayRoomPrice * 2) + (totalHalls * perDayHallPrice * 2);
+            setTotalAmount(calculatedTotal);
+        }
+    }, [totalRooms, perDayRoomPrice, totalHalls, perDayHallPrice, isTotalEdited]);
+
+    // Handler for manual total edits
+    const handleTotalChange = (e) => {
+        setIsTotalEdited(true);
+        setTotalAmount(Number(e.target.value));
+    };
+
     useEffect(() => {
         if (isOpen) {
             if (initialData) {
                 // Pre-fill form for editing
                 setName(initialData.name);
-                setFromDate(initialData.fromDate);
+                setTotalAmount(initialData.totalAmount);
                 settotalRooms(initialData.totalRooms);
                 settotalHalls(initialData.totalHalls);
                 setperDayRoomPrice(initialData.perDayRoomPrice);
@@ -38,7 +53,7 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
             } else {
                 // Clear form for adding new location
                 setName('');
-                setFromDate('');
+                setTotalAmount('');
                 setperDayRoomPrice('');
                 setperDayHallPrice('');
                 setOptions({
@@ -53,7 +68,7 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newLocation = { name, fromDate, totalRooms, totalHalls, perDayRoomPrice, perDayHallPrice, options };
+        const newLocation = { name, totalAmount, totalRooms, totalHalls, perDayRoomPrice, perDayHallPrice, options };
 
         if (initialData) {
             // Update existing location
@@ -90,26 +105,26 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
                 <div className="grid grid-cols-2 gap-4">
                     <div className="form-group">
                         <label className="desc-font-xs uppercase mb-1">Rooms</label>
-                        <input type="number" className="form-input" value={totalRooms} onChange={(e) => settotalRooms(Number(e.target.value))} required />
+                        <input type="number" className="form-input" value={totalRooms} onChange={(e) => { settotalRooms(Number(e.target.value)); setIsTotalEdited(false); }} required />
                     </div>
                     <div className="form-group">
                         <label className="desc-font-xs uppercase mb-1">Price / Per Day</label>
-                        <input type="number" className="form-input" value={perDayRoomPrice} onChange={(e) => setperDayRoomPrice(Number(e.target.value))} required />
+                        <input type="number" className="form-input" value={perDayRoomPrice} onChange={(e) => { setperDayRoomPrice(Number(e.target.value)); setIsTotalEdited(false); }} required />
                     </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <div className="form-group">
                         <label className="desc-font-xs uppercase mb-1">Hall/s</label>
-                        <input type="number" className="form-input" value={totalHalls} onChange={(e) => settotalHalls(Number(e.target.value))} required />
+                        <input type="number" className="form-input" value={totalHalls} onChange={(e) => { settotalHalls(Number(e.target.value)); setIsTotalEdited(false); }} required />
                     </div>
                     <div className="form-group">
                         <label className="desc-font-xs uppercase mb-1">Price / Per Day</label>
-                        <input type="number" className="form-input" value={perDayHallPrice} onChange={(e) => setperDayHallPrice(Number(e.target.value))} required />
+                        <input type="number" className="form-input" value={perDayHallPrice} onChange={(e) => { setperDayHallPrice(Number(e.target.value)); setIsTotalEdited(false); }} required />
                     </div>
                 </div>
                 <div className="form-group">
-                    <label className="desc-font-xs uppercase mb-1">Date</label>
-                    <input type="date" className="form-input" value={fromDate} onChange={(e) => setFromDate(e.target.value)} required />
+                    <label className="desc-font-xs uppercase mb-1">Total</label>
+                    <input type="number" className="form-input" value={totalAmount} onChange={handleTotalChange} required />
                 </div>
                 <div className="form-group">
                     <label className="desc-font-xs uppercase mb-1">Features</label>

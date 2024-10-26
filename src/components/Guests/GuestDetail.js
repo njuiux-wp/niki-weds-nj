@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeftIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';
 import GuestModal from './GuestModal';
+import Loader from '../../widgets/Loader';
 
 const GuestDetail = () => {
     const { id } = useParams(); // Extract guest ID from URL
@@ -46,7 +47,7 @@ const GuestDetail = () => {
         }
     };
 
-    if (!guest) return <div>Loading...</div>; // Handle loading state
+    if (!guest) return <Loader />; // Handle loading state
 
     return (
         <div className="w-full">

@@ -4,7 +4,7 @@ import lottieFile from './../assets/json/loader.json';
 
 const Loader = () => {
     return (
-        <div className="bg-white w-full h-full">
+        <div className="w-full h-full">
             <Player
                 autoplay
                 loop

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/solid';
 import ToDoModal from './ToDoModal';
+import Loader from '../../widgets/Loader';
 
 const ToDoDetail = () => {
   const { id } = useParams();
@@ -48,7 +49,7 @@ const ToDoDetail = () => {
     fetchToDo();
   };
 
-  if (!todo) return <div>Loading...</div>;
+  if (!todo) return <Loader />;
 
   return (
     <div className="w-full">
