@@ -21,10 +21,8 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (username) => {
-        console.log('Logging in user:', username); // Debugging line
         setUser(username);
         localStorage.setItem('user', JSON.stringify(username)); // Store username in local storage
-        console.log('User stored in local storage:', localStorage.getItem('user')); // Log after storing
         navigate('/dashboard'); // Redirect after login
     };
 

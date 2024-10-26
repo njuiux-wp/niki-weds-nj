@@ -6,8 +6,10 @@ import { XIcon } from '@heroicons/react/solid';
 const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
     const [name, setName] = useState('');
     const [fromDate, setFromDate] = useState('');
-    const [perDayPrice, setPerDayPrice] = useState(0);
-    const [depositPaid, setDepositPaid] = useState(0);
+    const [totalRooms, settotalRooms] = useState('');
+    const [totalHalls, settotalHalls] = useState('');
+    const [perDayRoomPrice, setperDayRoomPrice] = useState(0);
+    const [perDayHallPrice, setperDayHallPrice] = useState(0);
     const [options, setOptions] = useState({
         chairs: false,
         beds: false,
@@ -23,8 +25,10 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
                 // Pre-fill form for editing
                 setName(initialData.name);
                 setFromDate(initialData.fromDate);
-                setPerDayPrice(initialData.perDayPrice);
-                setDepositPaid(initialData.depositPaid);
+                settotalRooms(initialData.totalRooms);
+                settotalHalls(initialData.totalHalls);
+                setperDayRoomPrice(initialData.perDayRoomPrice);
+                setperDayHallPrice(initialData.perDayHallPrice);
                 setOptions(initialData.options || {
                     chairs: false,
                     beds: false,
@@ -35,8 +39,8 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
                 // Clear form for adding new location
                 setName('');
                 setFromDate('');
-                setPerDayPrice('');
-                setDepositPaid('');
+                setperDayRoomPrice('');
+                setperDayHallPrice('');
                 setOptions({
                     chairs: false,
                     beds: false,
@@ -49,7 +53,7 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newLocation = { name, fromDate, perDayPrice, depositPaid, options };
+        const newLocation = { name, fromDate, totalRooms, totalHalls, perDayRoomPrice, perDayHallPrice, options };
 
         if (initialData) {
             // Update existing location
@@ -83,17 +87,29 @@ const LocationModal = ({ isOpen, onClose, onLocationAdded, initialData }) => {
                     <label className="desc-font-xs uppercase mb-1">Location Name</label>
                     <input type="text" className="form-input" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="form-group">
+                        <label className="desc-font-xs uppercase mb-1">Rooms</label>
+                        <input type="number" className="form-input" value={totalRooms} onChange={(e) => settotalRooms(Number(e.target.value))} required />
+                    </div>
+                    <div className="form-group">
+                        <label className="desc-font-xs uppercase mb-1">Price / Per Day</label>
+                        <input type="number" className="form-input" value={perDayRoomPrice} onChange={(e) => setperDayRoomPrice(Number(e.target.value))} required />
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="form-group">
+                        <label className="desc-font-xs uppercase mb-1">Hall/s</label>
+                        <input type="number" className="form-input" value={totalHalls} onChange={(e) => settotalHalls(Number(e.target.value))} required />
+                    </div>
+                    <div className="form-group">
+                        <label className="desc-font-xs uppercase mb-1">Price / Per Day</label>
+                        <input type="number" className="form-input" value={perDayHallPrice} onChange={(e) => setperDayHallPrice(Number(e.target.value))} required />
+                    </div>
+                </div>
                 <div className="form-group">
                     <label className="desc-font-xs uppercase mb-1">Date</label>
                     <input type="date" className="form-input" value={fromDate} onChange={(e) => setFromDate(e.target.value)} required />
-                </div>
-                <div className="form-group">
-                    <label className="desc-font-xs uppercase mb-1">Price (Per Day)</label>
-                    <input type="number" className="form-input" value={perDayPrice} onChange={(e) => setPerDayPrice(Number(e.target.value))} required />
-                </div>
-                <div className="form-group">
-                    <label className="desc-font-xs uppercase mb-1">Deposit</label>
-                    <input type="number" className="form-input" value={depositPaid} onChange={(e) => setDepositPaid(Number(e.target.value))} required />
                 </div>
                 <div className="form-group">
                     <label className="desc-font-xs uppercase mb-1">Features</label>

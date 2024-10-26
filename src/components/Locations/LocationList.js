@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ChevronRightIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid';  // Import PencilIcon for edit
 import LocationModal from './LocationModal';
+import Placeholder from '../../widgets/Placeholder';
+import Loader from '../../widgets/Loader';
 
 const LocationList = () => {
     const [locations, setLocations] = useState([]);
@@ -64,33 +66,44 @@ const LocationList = () => {
     return (
         <div className="w-full">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="title-font-xl">Locations</h2>
+                <h2 className="title-font-xl">Venues</h2>
                 <button className="btn-icon fs-14 underline" type="button" onClick={openAddModal}>Add</button>
             </div>
-            {locations.map((location, index) => (
-                <div key={`${location._id}-${index}`} className={`app-card flex justify-between mb-4 !pb-12 relative ${selectedLocation === location.name ? 'bg-blue-100' : ''}`}>
-                    <div className="flex flex-col">
-                        <p className="title-font-m">{location.name}</p>
-                        <p className="desc-font-s my-1">From Date: {location.fromDate}</p>
-                        <p className="desc-font-xs uppercase">Total Price: Rs.{location.perDayPrice * 2}</p>
-                        <p className="desc-font-xs uppercase">Deposit Paid: Rs.{location.depositPaid}</p>
+            {/* <Loader /> */}
+            {locations.length === 0 ? (
+                <Placeholder
+                    // imgsrc="./../../assets/vendors.png"
+                    iconName="map_search"
+                    title="No Venues Found"
+                    description="There are no venues listed."
+                    linkText="Add Venue"
+                    linkTo="/locations"
+                />
+            ) : (
+                locations.map((location, index) => (
+                    <div key={`${location._id}-${index}`} className={`app-card flex justify-between mb-4 !pb-12 relative ${selectedLocation === location.name ? 'bg-blue-100' : ''}`}>
+                        <div className="flex flex-col">
+                            <p className="title-font-m">{location.name}</p>
+                            <p className="desc-font-s my-1">From Date: {location.fromDate}</p>
+                            <p className="desc-font-xs uppercase">Total Price: Rs.{location.perDayRoomPrice * 2}</p>
+                        </div>
+                        <div className="flex">
+                            <button className="btn-icon" onClick={() => openEditModal(location)} type="button">
+                                <PencilIcon className="h-4 w-4" />
+                            </button>
+                            <button className="btn-icon !mx-4" onClick={() => handleDelete(location._id)} type="button">
+                                <TrashIcon className="h-4 w-4" />
+                            </button>
+                            <Link to={`/locations/${location._id}`} className="btn-icon">
+                                <ChevronRightIcon className="h-6 w-6" />
+                            </Link>
+                        </div>
+                        <div className="desc-font-s App-link absolute bottom-1 left-0 text-center w-full border-t pt-2 pb-1" onClick={() => handleLocationClick(location)}>
+                            {selectedLocation === location.name ? 'Selected' : 'Select'}
+                        </div>
                     </div>
-                    <div className="flex">
-                        <button className="btn-icon" onClick={() => openEditModal(location)} type="button">
-                            <PencilIcon className="h-4 w-4" />
-                        </button>
-                        <button className="btn-icon !mx-4" onClick={() => handleDelete(location._id)} type="button">
-                            <TrashIcon className="h-4 w-4" />
-                        </button>
-                        <Link to={`/locations/${location._id}`} className="btn-icon">
-                            <ChevronRightIcon className="h-6 w-6" />
-                        </Link>
-                    </div>
-                    <div className="desc-font-s App-link absolute bottom-1 left-0 text-center w-full border-t pt-2 pb-1" onClick={() => handleLocationClick(location)}>
-                        {selectedLocation === location.name ? 'Selected' : 'Select'}
-                    </div>
-                </div>
-            ))}
+                ))
+            )}
             <LocationModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

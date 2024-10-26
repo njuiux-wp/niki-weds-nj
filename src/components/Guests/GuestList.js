@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import Placeholder from '../../widgets/Placeholder';
 
 const GuestList = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const GuestList = () => {
 
   const renderContent = () => {
     return guests.map(guest => (
-      <div key={guest._id} className="flex items-center justify-between border-b py-3">
+      <div key={guest._id} className="flex items-center justify-between bg-white p-3 mb-2 rounded-lg">
         <span className="desc-font-s !text-black">{guest.name}</span>
         <div className="flex items-center justify-end">
           <span className="desc-font-s !font-bold !text-black max-w-[60px] mr-2">{guest.familyMembers}</span>
@@ -66,7 +67,8 @@ const GuestList = () => {
         </div>
       </nav>
       <main className="w-full mt-3">
-        {guests.length > 0 ? renderContent() : <p>No guests found for {activeTab}.</p>}
+        {/* {guests.length > 0 ? renderContent() : <p>No guests found for {activeTab}.</p>} */}
+        {guests.length > 0 ? renderContent() : <Placeholder></Placeholder>}
       </main>
     </div>
   );

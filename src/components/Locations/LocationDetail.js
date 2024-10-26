@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/solid';
 import LocationModal from './LocationModal';
+import Loader from '../../widgets/Loader';
 
 
 const LocationDetail = () => {
@@ -44,7 +45,7 @@ const LocationDetail = () => {
     setIsEditModalOpen(true);
   };
 
-  if (!location) return <div>Loading...</div>;
+  if (!location) return <Loader />;
 
   return (
     <div className="w-full">
@@ -69,23 +70,61 @@ const LocationDetail = () => {
           <span className="font-bold">{location.fromDate}</span>
         </p>
       </div>
-      <div className="app-card flex flex-col !justify-start gap-4 mb-5">
-        <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Price (Per Day):</span>
-          <span className="font-bold">Rs.{location.perDayPrice}</span>
-        </p>
-        <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Total Price:</span>
-          <span className="font-bold">Rs.{location.perDayPrice * 2}</span>
-        </p>
-        <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Total Price (with 50 Rooms):</span>
-          <span className="font-bold">Rs.{location.perDayPrice * 2 * 50}</span>
-        </p>
-        <p className="title-font-m flex flex-col w-full">
-          <span className="desc-font-xs uppercase">Deposit Paid:</span>
-          <span className="font-bold">Rs.{location.depositPaid}</span>
-        </p>
+      <div className="app-card flex flex-col !justify-start mb-5">
+        <div className="flex items-center justify-start w-full mb-3 mt-1">
+          <div className="!w-[30px] !h-[30px] rounded-full app-theme-bg flex items-center justify-center me-3">
+            <span className="material-symbols-outlined fs-18">bed</span>
+          </div>
+          <h2 className="title-font-xl fs-16">Rooms</h2>
+        </div>
+        <table className="table w-full">
+          <tbody>
+            <tr>
+              <td className="desc-font-xs uppercase">Total Rooms</td>
+              <td className="desc-font-xs font-bold text-right">{location.totalRooms}</td>
+            </tr>
+            <tr>
+              <td className="desc-font-xs uppercase">Room Price / Per Day</td>
+              <td className="desc-font-xs font-bold text-right">Rs.{location.perDayRoomPrice}</td>
+            </tr>
+            <tr>
+              <td className="desc-font-xs uppercase">Total No. of Days</td>
+              <td className="desc-font-xs font-bold text-right">2</td>
+            </tr>
+            <tr>
+              <td className="desc-font-xs uppercase">Overall Total for Rooms</td>
+              <td className="desc-font-xs font-bold text-right">Rs.{location.perDayRoomPrice * location.totalRooms * 2}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="app-card flex flex-col !justify-start mb-5">
+        <div className="flex items-center justify-start w-full mb-3 mt-1">
+          <div className="!w-[30px] !h-[30px] rounded-full app-theme-bg flex items-center justify-center me-3">
+            <span className="material-symbols-outlined fs-18">weekend</span>
+          </div>
+          <h2 className="title-font-xl fs-16">Halls</h2>
+        </div>
+        <table className="table w-full">
+          <tbody>
+            <tr>
+              <td className="desc-font-xs uppercase">Total Halls</td>
+              <td className="desc-font-xs font-bold text-right">{location.totalHalls}</td>
+            </tr>
+            <tr>
+              <td className="desc-font-xs uppercase">Hall Price / Per Day</td>
+              <td className="desc-font-xs font-bold text-right">Rs.{location.perDayHallPrice}</td>
+            </tr>
+            <tr>
+              <td className="desc-font-xs uppercase">Total No. of Days</td>
+              <td className="desc-font-xs font-bold text-right">2</td>
+            </tr>
+            <tr>
+              <td className="desc-font-xs uppercase">Overall Total for Halls</td>
+              <td className="desc-font-xs font-bold text-right">Rs.{location.perDayHallPrice * location.totalHalls * 2}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <h2 className="title-font-xl fs-16">Facilities</h2>
       <div className="flex flex-wrap items-center w-full mt-2 mb-4">

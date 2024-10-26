@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronRightIcon, PencilIcon } from '@heroicons/react/solid';
-import Events from './Events';
 import DashboardBanner from './DashboardBanner';
 import { Link, useLocation } from 'react-router-dom';
+import EventList from './../Events/EventList';
 
 const Dashboard = () => {
   const location = useLocation();
@@ -28,7 +28,7 @@ const Dashboard = () => {
           <p className="desc-font-s">{selectedLocation}</p>
         </div>
         <Link to={`/locations`} state={{ fromDashboard: true }} className="btn-icon">
-          <PencilIcon className="h-6 w-6" />
+          <PencilIcon className="h-4 w-4" />
         </Link>
       </div>
       <div className="grid grid-cols-2 gap-4 my-3">
@@ -41,7 +41,7 @@ const Dashboard = () => {
           <ChevronRightIcon className="h-6 w-6 App-link" />
         </Link>
       </div>
-      {/* <Events></Events> */}
+      <EventList />
       {/* <p>https://dribbble.com/shots/17817743-Wedding-Planner-App-UI-Design</p>
       <p>https://dribbble.com/shots/17817834-Wedding-Planner-App-Homepage-UI-Design</p> */}
     </div>

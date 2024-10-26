@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { PencilIcon, TrashIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { PhoneIcon, PencilIcon, TrashIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import VendorModal from './VendorModal';
+import Placeholder from '../../widgets/Placeholder';
 
 const VendorList = () => {
   const [vendors, setVendors] = useState([]);
@@ -43,26 +44,40 @@ const VendorList = () => {
         <h2 className="title-font-xl">Vendors</h2>
         <button onClick={() => setModalIsOpen(true)} className="btn-icon fs-14 underline">Add</button>
       </div>
-      {vendors.map(vendor => (
-        <div key={vendor._id} className="app-card flex justify-between mb-4">
-          <div className="flex flex-col">
-            <p className="title-font-m">{vendor.name}</p>
-            <p className="desc-font-s my-1">Contact: {vendor.contactNumber}</p>
-            <div className="flex items-center justify-center rounded-lg fs-14 bg-green-700 px-2 py-1 title-font-m !text-white font-bold">{vendor.category}</div>
+      {vendors.length === 0 ? (
+        <Placeholder
+          // imgsrc="./../../assets/vendors.png"
+          iconName="group_search"
+          title="No Vendors Found"
+          description="There are no vendors listed."
+          linkText="Add Vendor"
+          linkTo="/vendors"
+        />
+      ) : (
+        vendors.map(vendor => (
+          <div key={vendor._id} className="app-card flex justify-between mb-4">
+            <div className="flex flex-col">
+              <p className="title-font-m">{vendor.name}</p>
+              {/* <p className="desc-font-s my-1">Contact: {vendor.contactNumber}</p> */}
+              <div className="flex items-center justify-center rounded-lg fs-14 bg-green-700 px-2 py-1 title-font-m !text-white font-bold mt-1">{vendor.category}</div>
+            </div>
+            <div className="flex">
+              <a className="btn-icon !mr-4" href={`tel:${vendor.contactNumber}`}>
+                <PhoneIcon className="h-4 w-4" />
+              </a>
+              <button className="btn-icon" onClick={() => handleEdit(vendor)} type="button">
+                <PencilIcon className="h-4 w-4" />
+              </button>
+              <button className="btn-icon !mx-4" onClick={() => handleDelete(vendor._id)} type="button">
+                <TrashIcon className="h-4 w-4" />
+              </button>
+              <Link to={`/vendors/${vendor._id}`} className="btn-icon">
+                <ChevronRightIcon className="h-6 w-6" />
+              </Link>
+            </div>
           </div>
-          <div className="flex">
-            <button className="btn-icon" onClick={() => handleEdit(vendor)} type="button">
-              <PencilIcon className="h-4 w-4" />
-            </button>
-            <button className="btn-icon !mx-4" onClick={() => handleDelete(vendor._id)} type="button">
-              <TrashIcon className="h-4 w-4" />
-            </button>
-            <Link to={`/vendors/${vendor._id}`} className="btn-icon">
-              <ChevronRightIcon className="h-6 w-6" />
-            </Link>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
       <VendorModal
         isOpen={modalIsOpen}
         onRequestClose={() => {

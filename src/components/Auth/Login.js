@@ -26,7 +26,6 @@ const Login = () => {
             console.log("Backend URL:", backendUrl);
             const response = await axios.post(`${backendUrl}/auth/login`, { phoneNumber });
             setOtpMessage(response.data.message);
-            console.log('data:', setOtpMessage);
             setStoredOtp(response.data.otp); // Store the OTP in state
             setIsOtpSent(true); // Show OTP input after successful phone number validation
         } catch (error) {
@@ -48,7 +47,6 @@ const Login = () => {
         }
 
         try {
-            console.log("Backend URL:", backendUrl);
             const response = await axios.post(`${backendUrl}/auth/verify-otp`, { phoneNumber, otp });
             if (response.data.valid) {
                 login(response.data.username); // Store username in context after successful login
