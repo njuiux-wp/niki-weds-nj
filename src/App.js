@@ -27,7 +27,27 @@ function App() {
 }
 
 const Main = ({ activeTab, setActiveTab }) => {
-  const { user, logout } = useAuth(); // Use the custom hook to get user and logout
+  const { user, logout } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      loadDataForActiveTab();
+    }
+  }, [user, activeTab]); // Depend on user and activeTab
+
+  const loadDataForActiveTab = () => {
+    // Assuming you have a function to fetch data based on `activeTab`
+    switch (activeTab) {
+      case 'dashboard':
+        // Fetch data specific to the dashboard
+        break;
+      case 'otherTab': // Add cases as needed
+        // Fetch data for other tabs
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div id="app" className="w-full">
@@ -41,11 +61,12 @@ const Main = ({ activeTab, setActiveTab }) => {
         </>
       ) : (
         <div className="wrapper-container w-full max-w-[400px] mx-auto min-h-screen app-theme-bg px-[20px] pt-[20px] pb-[70px]">
-          <Login /> {/* Add this line to ensure Login component is rendered when user is null */}
+          <Login />
         </div>
       )}
     </div>
   );
-}
+};
+
 
 export default App;

@@ -31,7 +31,8 @@ const Dashboard = () => {
           <PencilIcon className="h-4 w-4" />
         </Link>
       </div>
-      <div className="grid grid-cols-2 gap-4 mt-0 mb-6">
+      <EventList />
+      <div className="grid grid-cols-2 gap-4 mt-6 mb-4">
         <Link to={`/budget`} className="app-card flex-col">
           <div className="title-font-m fs-14">Budget</div>
           <ChevronRightIcon className="h-6 w-6 App-link" />
@@ -41,7 +42,6 @@ const Dashboard = () => {
           <ChevronRightIcon className="h-6 w-6 App-link" />
         </Link>
       </div>
-      <EventList />
       {/* <p>https://dribbble.com/shots/17817743-Wedding-Planner-App-UI-Design</p>
       <p>https://dribbble.com/shots/17817834-Wedding-Planner-App-Homepage-UI-Design</p> */}
     </div>

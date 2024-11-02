@@ -43,7 +43,8 @@ const GuestDashboard = () => {
         datasets: [
             {
                 data: [guestData.Niki, guestData.NJ],
-                backgroundColor: ['#9A2143', '#f8ceda'],
+                backgroundColor: ['#0000ff', '#9b9bed'],
+                // backgroundColor: ['#9A2143', '#f8ceda'],
             },
         ],
     };

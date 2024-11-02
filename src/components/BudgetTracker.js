@@ -66,7 +66,7 @@ const BudgetTracker = () => {
     datasets: [
       {
         data: [totalPaid, totalRemaining],
-        backgroundColor: ['#9A2143', '#f8ceda'],
+        backgroundColor: ['#0000ff', '#9b9bed'],
       },
     ],
   };
