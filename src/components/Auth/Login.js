@@ -71,10 +71,10 @@ const Login = () => {
     return (
         <div className="login-container w-full">
             <div className="flex flex-col items-center justify-center my-8">
-                <img src="/niki-weds-nj/nwn.png" className="w-auto h-auto object-contain" alt="Niki Weds Nj" />
-                <h1 className="title-font-xl mt-1 mb-2 !uppercase App-link">NJ & Niki</h1>
+                <img src="/niki-weds-nj/nwn.png" className="w-60 h-auto object-contain rounded-full" alt="Niki Weds Nj" />
+                {/* <h1 className="title-font-xl mt-2 mb-2 !uppercase App-link">NJ & Niki</h1> */}
             </div>
-            <div className="flex items-center justify-center mb-6">
+            <div className="flex items-center justify-center mt-3 mb-6">
                 <h2 className="title-font-xl">Login</h2>
             </div>
             {!isOtpSent ? (
